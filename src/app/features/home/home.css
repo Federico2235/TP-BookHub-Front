@@ -1,0 +1,46 @@
+.home {
+  padding: 2rem;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.book-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.book-card img {
+  width: 100%;
+  max-width: 120px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.available {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.unavailable {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.error {
+  color: #b91c1c;
+}

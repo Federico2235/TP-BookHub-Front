@@ -1,0 +1,31 @@
+<section class="home">
+
+
+
+  <h1>Bienvenue sur BookHub</h1>
+  <p>Exemple de connexion Angular vers le backend Spring Boot.</p>
+
+
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && books.length > 0) {
+    <div class="book-grid">
+      @for (book of books; track book.id) {
+        <article class="book-card">
+          <img [src]="book.coverUrl" [alt]="book.title" />
+          <h2>{{ book.title }}</h2>
+          <p><strong>Auteur :</strong> {{ book.author }}</p>
+          <p><strong>Catégorie :</strong> {{ book.category }}</p>
+          <p>{{ book.shortDesc }}</p>
+
+          <span class="badge" [class.available]="book.available" [class.unavailable]="!book.available">
+            {{ book.available ? 'Disponible' : 'Indisponible' }}
+          </span>
+        </article>
+      }
+    </div>
+  }
+</section>
