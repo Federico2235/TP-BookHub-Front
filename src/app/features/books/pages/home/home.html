@@ -1,0 +1,88 @@
+
+
+<!-- Hero & Search Section -->
+<section class="mb-16 bg-primary-container">
+  <div class="mb-12">
+    <h1 class="text-5xl font-extrabold text-primary tracking-tight mb-4">Bienvenue dans l'Archive</h1>
+    <p class="text-xl text-on-surface-variant max-w-2xl leading-relaxed">
+      Explorez notre collection de savoirs partagés. Trouvez votre prochaine lecture parmi des milliers d'ouvrages soigneusement sélectionnés.
+    </p>
+  </div>
+  <!-- Enhanced Search & Filter -->
+  <div class="bg-surface-container-low p-8 rounded-[2rem] space-y-6">
+    <div class="relative group">
+      <span class="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+      <input class="w-full pl-16 pr-6 py-5 bg-surface-container-lowest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher un livre, un auteur ou un ISBN..." type="text"/>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex-1 min-w-[200px] relative">
+        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
+          <option>Toutes les Catégories</option>
+          <option>Littérature</option>
+          <option>Sciences</option>
+          <option>Histoire</option>
+          <option>Art &amp; Design</option>
+        </select>
+        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+      </div>
+      <div class="flex-1 min-w-[200px] relative">
+        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
+          <option>Disponibilité</option>
+          <option>Disponible</option>
+          <option>Emprunté</option>
+        </select>
+        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+      </div>
+      <div class="flex-1 min-w-[200px] relative">
+        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
+          <option>Auteur</option>
+          <option>Victor Hugo</option>
+          <option>Simone de Beauvoir</option>
+          <option>Albert Camus</option>
+        </select>
+        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+      </div>
+      <button class="px-8 py-3 tonal-gradient text-on-primary rounded-xl font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+        Filtrer
+      </button>
+    </div>
+  </div>
+</section>
+<!-- Book Catalog Grid -->
+<section>
+  <div class="flex justify-between items-end mb-10">
+    <h2 class="text-3xl font-bold text-primary">Nouveautés &amp; Classiques</h2>
+    <span class="text-on-surface-variant font-medium">XXX livres trouvés</span>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- ################# Book Card loop #######################-->
+    @for (book of books; track book.id){
+      <div class="group bg-surface-container-low rounded-2rem p-6 transition-all hover:translate-y-4px">
+        <div class="relative mb-6 aspect-2/3 rounded-xl overflow-hidden shadow-lg">
+          <img alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="unbound book cover design with minimalist typography on a textured cream paper background with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAveICjI60YbJzicBIwdd4X8ECwGnT0stD8tsx0UNSVcPfIhix3VDRATdKZoeQDis0zzjrxgMrJJU0U5GEfWsjhQ8FHcvDzRdRz8YGHVWWPQSMFd1Jg3mwsHJ71izROmN9-t_fCwM5SHu4nwsrMWF3czUEwycwQQA2j195aKC0ztf9ZHtHYE-f4J7hh_RFG5vDThEThxBN_DasPc7rg0N5JjjPVxzxWsGgREMMdBkLkzhJFFrEIfIpMoNyKPCaMYz9RJBjm-zfyF8CJ"/>
+          <div class="absolute top-4 right-4 px-3 py-1 bg-surface-container-lowest/90 backdrop-blur rounded-full text-xs font-bold text-primary">
+            Nouveauté
+          </div>
+        </div>
+        <div class="space-y-2 mb-6 text-tertiary-container">
+          <h3 class="text-xl font-bold text-on-surface leading-tight">{{book.title}}</h3>
+          <p class="text-on-surface-variant font-medium">{{book.author}}</p>
+          <div class="flex items-center gap-2 pt-2">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <span class="text-sm font-semibold text-green-700">{{book.available}}</span>
+          </div>
+        </div>
+        <button class="w-full py-3 bg-surface-container-lowest text-primary font-bold rounded-xl border border-outline-variant/15 hover:bg-primary hover:text-on-primary transition-all">
+          Voir détails
+        </button>
+      </div>
+    }
+  </div>
+</section>
+
+
+
+
+
+
