@@ -1,0 +1,4 @@
+.glass-header {
+  backdrop-filter: blur(20px);
+  background-color: rgba(248, 249, 251, 0.8);
+}
