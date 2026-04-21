@@ -1,40 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { BooksService } from '../../services/books-service';
+import { Book } from '../../models/book.model';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
+  private bookService = inject(BooksService);
 
-  books = [
-    {
-      id: 1,
-      title: 'Le Petit Prince',
-      author: 'Antoine de Saint-Exupéry',
-      genre: 'Roman',
-      available: true,
-      description: "Un classique poétique sur l'enfance, l'amitié et le sens de la vie.",
-      imageUrl: '/assets/images/book-placeholder.jpg'
-    },
-    {
-      id: 2,
-      title: '1984',
-      author: 'George Orwell',
-      genre: 'Science-fiction',
-      available: false,
-      description: 'Une dystopie sur la surveillance, le pouvoir et la liberté.',
-      imageUrl: '/assets/images/book-placeholder.jpg'
-    },
-    {
-      id: 3,
-      title: "L'Étranger",
-      author: 'Albert Camus',
-      genre: 'Philosophie',
-      available: true,
-      description: "Un roman majeur autour de l'absurde et de la condition humaine.",
-      imageUrl: '/assets/images/book-placeholder.jpg'
-    }
-  ];
+  books: Book[] = [];
+  _books = this.bookService.getBooks();
+
 }
