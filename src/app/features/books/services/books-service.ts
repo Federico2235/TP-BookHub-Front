@@ -15,4 +15,8 @@ export class BooksService {
     return this.http.get<Book[]>(this.apiUrl);
   }
 
+  getBookById(id:string) {
+    return this.http.get<Book>(this.apiUrl+`/${id}`);
+  }
+
 }
