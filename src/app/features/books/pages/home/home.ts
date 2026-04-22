@@ -13,7 +13,6 @@ import { AsyncPipe } from '@angular/common';
 export class Home {
   private bookService = inject(BooksService);
 
-  books: Book[] = [];
   _books = this.bookService.getBooks();
 
 }
