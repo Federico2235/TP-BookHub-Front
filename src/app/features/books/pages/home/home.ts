@@ -1,12 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BooksService } from '../../services/books-service';
-import { Book } from '../../models/book.model';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -14,5 +13,4 @@ export class Home {
   private bookService = inject(BooksService);
 
   _books = this.bookService.getBooks();
-
 }
