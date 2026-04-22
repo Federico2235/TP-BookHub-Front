@@ -51,13 +51,14 @@
 </section>
 <!-- Book Catalog Grid -->
 <section>
-  <div class="flex justify-between items-end mb-10">
+  <div class="flex justify-between items-enda mb-10">
     <h2 class="text-3xl font-bold text-primary">Nouveautés &amp; Classiques</h2>
     <span class="text-on-surface-variant font-medium">XXX livres trouvés</span>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
     <!-- ################# Book Card loop #######################-->
-    @for (book of books; track book.id){
+
+    @for (book of (_books | async); track $index){
       <div class="group bg-surface-container-low rounded-2rem p-6 transition-all hover:translate-y-4px">
         <div class="relative mb-6 aspect-2/3 rounded-xl overflow-hidden shadow-lg">
           <img alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="unbound book cover design with minimalist typography on a textured cream paper background with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAveICjI60YbJzicBIwdd4X8ECwGnT0stD8tsx0UNSVcPfIhix3VDRATdKZoeQDis0zzjrxgMrJJU0U5GEfWsjhQ8FHcvDzRdRz8YGHVWWPQSMFd1Jg3mwsHJ71izROmN9-t_fCwM5SHu4nwsrMWF3czUEwycwQQA2j195aKC0ztf9ZHtHYE-f4J7hh_RFG5vDThEThxBN_DasPc7rg0N5JjjPVxzxWsGgREMMdBkLkzhJFFrEIfIpMoNyKPCaMYz9RJBjm-zfyF8CJ"/>
