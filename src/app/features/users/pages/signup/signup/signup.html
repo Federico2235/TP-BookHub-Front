@@ -16,42 +16,92 @@
       <div class="mb-10">
         <h2 class="text-3xl font-bold text-on-surface mb-2 tracking-tight">Créez votre compte</h2>
       </div>
-      <form class="space-y-6">
+      <form #signupForm="ngForm" class="space-y-6">
         <!-- First Name -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Prénom</label>
           <div class="relative group">
-            <input [(ngModel)]="firstName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="firstname" name="firstname" placeholder="Eleanor" required="true" type="text"/>
+            <input #firstnameRef="ngModel" required minlength="2" [(ngModel)]="firstName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="firstname" name="firstname" placeholder="Eleanor" type="text"/>
           </div>
+          @if (firstnameRef.invalid && firstnameRef.touched) {
+            <div>
+            @if (firstnameRef.errors?.['required']) {
+              <p class="text-error">Le prénom doit être renseigné</p>
+            }
+            @if (firstnameRef.errors?.['minlength']) {
+              <p class="text-error">Le prénom doit faire plus de 4 caractères</p>
+            }
+            </div>
+          }
         </div>
         <!-- Last Name -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Nom</label>
           <div class="relative group">
-            <input [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="lastname" name="lastname" placeholder="VANCE" required="true" type="text"/>
+            <input #lastnameRef="ngModel" required minlength="4" [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="lastname" name="lastname" placeholder="VANCE" type="text"/>
           </div>
+          @if (lastnameRef.invalid && lastnameRef.touched) {
+            @if (lastnameRef.errors?.['required']) {
+              <p class="text-error">Le nom de famille doit être renseigné</p>
+            }
+            @if (lastnameRef.errors?.['minlength']) {
+              <p class="text-error">Le nom de famille doit faire plus de 4 caractères</p>
+            }
+          }
         </div>
         <!-- Email Address -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="email">Adresse email</label>
           <div class="relative">
-            <input required [(ngModel)]="email" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="email" name="email" placeholder="name@example.com" type="email"/>
+            <input #emailRef="ngModel" required email [(ngModel)]="email" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="email" name="email" placeholder="name@example.com" type="email"/>
           </div>
+          <!-- Syntaxe pour Angular 17 et + -->
+          @if (emailRef.invalid && emailRef.touched) {
+            <div>
+              @if (emailRef.errors?.['required']) {
+                <p class="text-error">L'email est obligatoire.</p>
+              }
+              @if (emailRef.errors?.['email']) {
+                <p class="text-error">Format email invalide.</p>
+              }
+            </div>
+          }
         </div>
         <!-- Password Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="password">Mot de passe</label>
-            <input [(ngModel)]="password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" required="true" type="password"/>
+            <input #passwordRef="ngModel" required minlength="12" [(ngModel)]="password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" type="password"/>
+            @if (passwordRef.invalid && passwordRef.touched){
+              <div>
+                @if(passwordRef.errors?.['required']){
+                  <p class="text-error">Le mot de passe doit être renseigné</p>
+                }
+                @if (passwordRef.errors?.['minlength']){
+                  <p class="text-error">Le mot de passe doit faire plus de 12 caractères</p>
+                }
+              </div>
+            }
           </div>
+
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="confirm_password">Confirmation du mot de passe</label>
-            <input [(ngModel)]="confirmedPassword" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="true" type="password"/>
+            <input #confirmedpasswordRef="ngModel" required minlength="12" [(ngModel)]="confirmedPassword" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="true" type="password"/>
+            @if (confirmedpasswordRef.invalid && confirmedpasswordRef.touched){
+              <div>
+                @if(confirmedpasswordRef.errors?.['required']){
+                  <p class="text-error">La confirmation de mot de passe doit être renseignée</p>
+                }
+                @if (passwordRef.errors?.['minlength']){
+                  <p class="text-error">La confirmation de mot de passe doit faire plus de 12 caractères</p>
+                }
+              </div>
+            }
           </div>
         </div>
 
         <!-- Primary CTA -->
-        <button (click)="handleSignup()" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
+        <button [disabled]="signupForm.invalid" (click)="handleSignup()" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
           Enregistrer
         </button>
       </form>
