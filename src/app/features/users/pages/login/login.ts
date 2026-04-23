@@ -34,6 +34,7 @@ export class Login {
         this.message.set('');
         if (response.token) {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('id', response.id);
           await this.router.navigate(['/']);
         }
       },

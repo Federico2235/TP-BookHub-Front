@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AuthService } from '../../features/users/services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  protected readonly localStorage = localStorage;
+
+  private readonly authService: AuthService = inject(AuthService);
+  userId = this.authService.getUserId();
+
+  isUserLogged(){
+    return this.authService.isUserLogged()
+  }
+
+  logout() {
+    this.authService.logout()
+  }
 }

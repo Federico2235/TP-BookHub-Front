@@ -14,4 +14,17 @@ export class AuthService {
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`,request)
   }
+
+  isUserLogged() {
+    return localStorage.getItem("token") !== null;
+  }
+
+  logout() {
+    localStorage.removeItem("token")
+    localStorage.removeItem('id')
+  }
+
+  getUserId() {
+    return localStorage.getItem('id');
+  }
 }

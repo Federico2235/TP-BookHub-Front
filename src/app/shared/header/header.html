@@ -9,18 +9,20 @@
       </nav>
     </div>
     <div class="flex items-center gap-4">
-      @if (localStorage.getItem("token")){
-        <div class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full">
+      @if (isUserLogged()){
+        <button [routerLink]="['/profile', userId]" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
           <span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
           <span class="text-on-surface font-medium">Jean Dupont</span>
-        </div>
+        </button>
+        <button (click)="logout()" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
+          <span class="text-on-surface font-medium">Se déconnecter</span>
+        </button>
       }
-      @if (!localStorage.getItem("token")){
-        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold hover:bg-slate-100 transition-colors duration-300">
+      @if (!isUserLogged()){
+        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
           Login
         </button>
       }
-
     </div>
   </div>
 </header>
