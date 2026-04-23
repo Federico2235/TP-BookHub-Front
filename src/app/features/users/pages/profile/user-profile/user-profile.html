@@ -1,0 +1,100 @@
+<h1 class="text-3xl font-bold mb-5">Mon profil</h1>
+<!-- Bento Grid Content Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- 1. Personal Information Section -->
+  <div class="lg:col-span-1 space-y-6">
+    <div class="bg-surface-container-low rounded-[2rem] p-8 transition-all hover:bg-surface-container/80 group">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">badge</span>
+        </div>
+        <h3 class="text-xl font-bold tracking-tight">Informations Personnelles</h3>
+      </div>
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Nom</p>
+          <p class="text-xl font-medium text-on-surface">Dupont</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Prénom</p>
+          <p class="text-xl font-medium text-on-surface">Jean</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Email</p>
+          <p class="text-lg font-medium text-on-surface">ceciestunmail</p>
+        </div>
+        <div class="flex justify-between items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Mot de passe</p>
+            <p class="text-lg font-medium text-on-surface tracking-widest">••••••••</p>
+          </div>
+          <button class="text-primary text-sm font-bold hover:underline mb-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">edit</span>
+            Modifier
+          </button>
+        </div>
+      </div>
+      <button class="mt-10 w-full py-4 px-6 bg-surface-container-lowest rounded-xl text-primary font-bold text-sm border border-outline-variant/15 hover:bg-white transition-all shadow-sm">
+        Éditer le profil public
+      </button>
+    </div>
+  </div>
+  <!-- Content Area: Loans & Reservations -->
+  <div class="lg:col-span-2 space-y-6">
+    <!-- 3. Current Loans List Section -->
+    <div class="bg-surface-container-lowest rounded-[2rem] p-8 border border-outline-variant/15">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold tracking-tight">Emprunts en cours</h3>
+        <span class="text-sm font-medium text-on-surface-variant">3 documents actifs</span>
+      </div>
+      <div class="space-y-4">
+        <!-- Overdue Loan -->
+        <div class="flex items-center gap-4 p-5 bg-error-container/30 border border-error/10 rounded-2xl">
+          <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+            <img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7cxjvkl5B4P2Lq4KqmYNS7u_XTouzWPGdpmN9w13MqpBQcz-YDiuNdaFn048198MH3_JMzZU8gSJtYnDP2MoMCjNAuSvr38Dr060_4-3eYCN7FDX2DNcmCrr2Oz9NcsqaitEW8EAZkel4btPuflPs_dMU1PY7IpzzIAE_eZn3A6ExMIHCzBXf05t04Lz8a7mctjmNvSGzxzIE9Qgfn3jy4e6kbvxfMOaucm9VLZUjB5ZdsSPvKgq9UYApGrCzhUg30jghacH9bI3m"/>
+          </div>
+          <div class="flex-grow">
+            <p class="text-base font-bold truncate text-on-surface">L'Étranger</p>
+            <p class="text-sm text-on-surface-variant">Albert Camus • Retour prévu : 15 Octobre 2023</p>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="px-3 py-1 bg-error text-on-error text-[11px] font-bold uppercase rounded-full tracking-wider">En retard</span>
+          </div>
+        </div>
+        <!-- On Time Loan -->
+        <div class="flex items-center gap-4 p-5 bg-surface-container-low rounded-2xl">
+          <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+            <img alt="Archive item" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBVgJjlqIKa8V8Azc1BZdquYQkoujHathsBcCUislA4hamIxQ0Isxjk7kXP0W2MI93X8DQn-8B9xKhvOpGaOrDWUjxxAJaQLgabYb62S7JjwuYOms_nz8QshXwbFPerelehfqpE_3MalNqFcVPQj79zRV_UtQYXrPgoHtyg-SSn5P9JLel4rpxFEJICT2WtcObA23PzWGHse7e16WwtReA5FMykhxLIRVmjq8u7FJqKYZYNT2dHWTeD1o7VZFbxWrfv4buzLfoIkuO"/>
+          </div>
+          <div class="flex-grow">
+            <p class="text-base font-bold truncate text-on-surface">Plan de Paris (1870)</p>
+            <p class="text-sm text-on-surface-variant">Archive Maps • Retour prévu : 02 Novembre 2023</p>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="px-3 py-1 bg-green-100 text-green-800 text-[11px] font-bold uppercase rounded-full tracking-wider">À l'heure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2. Reservations List Section -->
+    <div class="bg-surface-container-low rounded-[2rem] p-8">
+      <h3 class="text-2xl font-bold tracking-tight mb-6">Mes Réservations</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+              <span class="material-symbols-outlined">menu_book</span>
+            </div>
+            <span class="text-[11px] font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
+          </div>
+          <h4 class="font-bold text-lg mb-1">Le Deuxième Sexe</h4>
+          <p class="text-sm text-on-surface-variant mb-4">Simone de Beauvoir</p>
+          <div class="pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-primary">
+            <span class="material-symbols-outlined text-sm">event</span>
+            <span class="text-xs font-bold">Réservation jusqu'au 25 Octobre 2023</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
