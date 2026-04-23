@@ -32,16 +32,18 @@ export class Login {
         this.message.set('');
 
         if (response.token) {
-          this.token.set(response.token);
-
           localStorage.setItem('token', response.token);
           localStorage.setItem('id', response.id);
 
           this.userService.fetchUserById(response.id).subscribe({
-            next: (user) => this.userService.loggedUserSignal.set(user),
+            next: (user) => {
+              this.userService.loggedUserSignal.set(user);
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.router.navigate(['/']);
+            }
           });
-
-          this.router.navigate(['/']);
         }
       },
       error: (err) => {

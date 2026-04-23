@@ -14,7 +14,7 @@ export class UserService {
   private readonly API_URL: string = 'http://localhost:8080/api/users'
 
   fetchUserById(id: string) {
-    return this.http.get<User>(this.API_URL+id)
+    return this.http.get<User>(this.API_URL+'/'+id)
   }
 
   signup(request: SignupRequest): Observable<SignupResponse> {
