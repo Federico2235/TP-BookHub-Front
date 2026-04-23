@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../models/loginRequest.model';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../models/authResponse.model';
+import { UserService } from './user-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private userService = inject(UserService)
   private apiUrl = 'http://localhost:8080/api/auth';
 
   login(request: LoginRequest): Observable<AuthResponse> {
@@ -22,6 +24,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem("token")
     localStorage.removeItem('id')
+    this.userService.loggedUserSignal.set(null)
   }
 
   getUserId() {
