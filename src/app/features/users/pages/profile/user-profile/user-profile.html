@@ -13,15 +13,15 @@
       <div class="space-y-6">
         <div>
           <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Nom</p>
-          <p class="text-xl font-medium text-on-surface">Dupont</p>
+          <p class="text-xl font-medium text-on-surface">{{user()?.lastName}}</p>
         </div>
         <div>
           <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Prénom</p>
-          <p class="text-xl font-medium text-on-surface">Jean</p>
+          <p class="text-xl font-medium text-on-surface">{{user()?.firstName}}</p>
         </div>
         <div>
           <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Email</p>
-          <p class="text-lg font-medium text-on-surface">ceciestunmail</p>
+          <p class="text-lg font-medium text-on-surface">{{ user()?.email }}</p>
         </div>
         <div class="flex justify-between items-end">
           <div>
