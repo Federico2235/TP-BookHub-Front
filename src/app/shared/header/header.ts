@@ -1,8 +1,6 @@
-import { Component, inject, Signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../features/users/services/auth-service';
-import { User } from '../../features/users/models/user.model';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { UserService } from '../../features/users/services/user-service';
 
 @Component({
@@ -14,13 +12,9 @@ import { UserService } from '../../features/users/services/user-service';
 export class Header {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
-  private readonly userService = inject(UserService)
-  userId = this.authService.getUserId();
-  protected user: Signal<User | undefined> = toSignal(this.userService.fetchUserById(this.userId!));
-
-  isUserLogged() {
-    return this.authService.isUserLogged();
-  }
+  private readonly userService = inject(UserService);
+  protected userId = this.authService.getUserId();
+  protected loggedUser = this.userService.loggedUserSignal
 
   logout() {
     this.authService.logout();

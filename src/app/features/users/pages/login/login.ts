@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
-import { FormGroup, FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { LoginRequest } from '../../models/loginRequest.model';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 
 @Component({
@@ -13,14 +13,13 @@ import { Router } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
+  private readonly userService: UserService = inject(UserService);
+  private readonly authApi: AuthService = inject(AuthService);
+  private readonly router: Router = inject(Router);
   email: string = '';
   password: string = '';
-  message= signal ('');
-  token = signal<string | null>(null);
-  constructor(
-    private authApi: AuthService,
-    private router: Router,
-  ) {}
+  message: WritableSignal<string> = signal('');
+  token: WritableSignal<string | null> = signal<string | null>(null);
 
   handleLogin() {
     const loginRequest: LoginRequest = {
@@ -29,18 +28,24 @@ export class Login {
     };
 
     this.authApi.login(loginRequest).subscribe({
-      next: async (response) => {
-        this.token.set(response.token);
+      next: (response) => {
         this.message.set('');
+
         if (response.token) {
+          this.token.set(response.token);
+
           localStorage.setItem('token', response.token);
           localStorage.setItem('id', response.id);
-          await this.router.navigate(['/']);
+
+          this.userService.fetchUserById(response.id).subscribe({
+            next: (user) => this.userService.loggedUserSignal.set(user),
+          });
+
+          this.router.navigate(['/']);
         }
       },
       error: (err) => {
         console.error('Error en login', err);
-
         this.token.set(null);
         this.message.set(err?.error?.message);
       },
