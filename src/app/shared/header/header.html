@@ -18,9 +18,13 @@
           <span class="text-on-surface font-medium">Se déconnecter</span>
         </button>
       }
+
       @if (!loggedUser()){
+        <button routerLink="/signup" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
+          Créer un compte
+        </button>
         <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
-          Login
+          Se connecter
         </button>
       }
     </div>

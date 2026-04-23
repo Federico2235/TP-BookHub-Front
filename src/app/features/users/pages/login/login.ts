@@ -2,13 +2,13 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { LoginRequest } from '../../models/loginRequest.model';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { UserService } from '../../services/user-service';
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -32,16 +32,18 @@ export class Login {
         this.message.set('');
 
         if (response.token) {
-          this.token.set(response.token);
-
           localStorage.setItem('token', response.token);
           localStorage.setItem('id', response.id);
 
           this.userService.fetchUserById(response.id).subscribe({
-            next: (user) => this.userService.loggedUserSignal.set(user),
+            next: (user) => {
+              this.userService.loggedUserSignal.set(user);
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.router.navigate(['/']);
+            }
           });
-
-          this.router.navigate(['/']);
         }
       },
       error: (err) => {

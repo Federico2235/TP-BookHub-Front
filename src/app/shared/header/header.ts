@@ -13,16 +13,18 @@ export class Header {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
   private readonly userService = inject(UserService);
-  protected userId = this.authService.getUserId();
+
   protected loggedUser = this.userService.loggedUserSignal
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   navigateToProfile() {
-    if (this.userId) {
-      this.router.navigate(['profile', this.userId]);
+     const userId= this.authService.getUserId();
+    if (userId) {
+      this.router.navigate(['profile', userId]);
     }
   }
 }
