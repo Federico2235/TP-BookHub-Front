@@ -21,38 +21,37 @@
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Prénom</label>
           <div class="relative group">
-            <input [(ngModel)]="firstName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="full_name" name="full_name" placeholder="Eleanor" required="true" type="text"/>
+            <input [(ngModel)]="firstName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="firstname" name="firstname" placeholder="Eleanor" required="true" type="text"/>
           </div>
         </div>
-        <p>{{firstName}}</p>
         <!-- Last Name -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Nom</label>
           <div class="relative group">
-            <input [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="full_name" name="full_name" placeholder="VANCE" required="true" type="text"/>
+            <input [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="lastname" name="lastname" placeholder="VANCE" required="true" type="text"/>
           </div>
         </div>
         <!-- Email Address -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="email">Adresse email</label>
           <div class="relative">
-            <input [(ngModel)]="email" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+            <input required [(ngModel)]="email" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="email" name="email" placeholder="name@example.com" type="email"/>
           </div>
         </div>
         <!-- Password Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="password">Mot de passe</label>
-            <input [(ngModel)]="password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+            <input [(ngModel)]="password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" required="true" type="password"/>
           </div>
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="confirm_password">Confirmation du mot de passe</label>
-            <input [(ngModel)]="confirmedPassword" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="" type="password"/>
+            <input [(ngModel)]="confirmedPassword" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="true" type="password"/>
           </div>
         </div>
 
         <!-- Primary CTA -->
-        <button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
+        <button (click)="handleSignup()" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
           Enregistrer
         </button>
       </form>
