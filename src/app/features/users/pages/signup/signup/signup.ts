@@ -24,10 +24,7 @@ export class Signup {
   password: string = '';
   confirmedPassword: string = '';
 
-
-  constructor(private router: Router, private userApi: UserService) {
-
-  }
+  constructor(private router: Router, private userApi: UserService) {}
 
   handleSignup(){
     const signupRequest: SignupRequest = {
