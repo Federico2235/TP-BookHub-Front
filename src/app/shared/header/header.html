@@ -9,13 +9,18 @@
       </nav>
     </div>
     <div class="flex items-center gap-4">
-      <div class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full">
-        <span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
-        <span class="text-on-surface font-medium">Jean Dupont</span>
-      </div>
-      <button class="px-6 py-2 rounded-xl text-primary font-semibold hover:bg-slate-100 transition-colors duration-300">
-        Déconnexion
-      </button>
+      @if (localStorage.getItem("token")){
+        <div class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full">
+          <span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+          <span class="text-on-surface font-medium">Jean Dupont</span>
+        </div>
+      }
+      @if (!localStorage.getItem("token")){
+        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold hover:bg-slate-100 transition-colors duration-300">
+          Login
+        </button>
+      }
+
     </div>
   </div>
 </header>
