@@ -40,9 +40,7 @@ export class Login {
             localStorage.setItem('token', response.token);
             localStorage.setItem('id', response.id);
 
-            this.userService.fetchUserById(response.id).subscribe({
-              next: (user) => this.userService.loggedUserSignal.set(user),
-            });
+            this.userService.updateLoggedUser()
 
             this.router.navigate(['/']);
           }
