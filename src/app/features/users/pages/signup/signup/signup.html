@@ -71,7 +71,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="password">Mot de passe</label>
-            <input #passwordRef="ngModel" required minlength="12" [(ngModel)]="password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" type="password"/>
+            <input [(ngModel)]="password" #passwordRef="ngModel" required minlength="12" (ngModelChange)="matchingPassword()"  class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="password" name="password" placeholder="••••••••" type="password"/>
             @if (passwordRef.invalid && passwordRef.touched){
               <div>
                 @if(passwordRef.errors?.['required']){
@@ -83,24 +83,22 @@
               </div>
             }
           </div>
-
           <div class="space-y-2">
             <label class="block text-sm font-semibold text-on-surface-variant px-1" for="confirm_password">Confirmation du mot de passe</label>
-            <input #confirmedpasswordRef="ngModel" required minlength="12" [(ngModel)]="confirmedPassword" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="true" type="password"/>
+            <input [(ngModel)]="confirmedPassword" #confirmedpasswordRef="ngModel" required minlength="12" (ngModelChange)="matchingPassword()" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="confirm_password" name="confirm_password" placeholder="••••••••" required="true" type="password"/>
             @if (confirmedpasswordRef.invalid && confirmedpasswordRef.touched){
               <div>
-                @if(confirmedpasswordRef.errors?.['required']){
+                @if(!passwordRef.invalid && confirmedpasswordRef.errors?.['required']){
                   <p class="text-error">La confirmation de mot de passe doit être renseignée</p>
-                }
-                @if (passwordRef.errors?.['minlength']){
-                  <p class="text-error">La confirmation de mot de passe doit faire plus de 12 caractères</p>
                 }
               </div>
             }
           </div>
+          <p>{{message}}</p>
         </div>
 
         <!-- Primary CTA -->
+
         @if (signupForm.invalid) {
           <button disabled (click)="handleSignup()" class="w-full bg-gray-100 from-primary to-primary-container text-gray-300 shadow-xl py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
             Enregistrer

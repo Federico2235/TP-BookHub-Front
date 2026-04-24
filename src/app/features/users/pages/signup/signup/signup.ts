@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, NgForm, Validators} from '@angular/forms';
 import {SignupRequest} from '../../../models/signupRequest.model';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../services/auth-service';
@@ -25,6 +25,15 @@ export class Signup {
   password: string = '';
   confirmedPassword: string = '';
 
+  message: string ='';
+
+  get noMismatch(): boolean {
+    console.log(this.password === this.confirmedPassword);
+    return this.password === this.confirmedPassword;
+
+  }
+
+
   constructor(private router: Router, private userApi: UserService) {}
 
   handleSignup(){
@@ -42,4 +51,14 @@ export class Signup {
       }
     })
   }
+  matchingPassword(){
+    if(!this.noMismatch){
+      this.message = "Les mots de passe doivent correspondre.";
+      console.log(this.message);
+    } else {
+      this.message = "";
+      console.log(this.message);
+    }
+  }
+
 }
