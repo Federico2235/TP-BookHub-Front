@@ -8,11 +8,11 @@
   <div class="hidden md:flex flex-col space-y-6">
     <div class="space-y-2">
       <span class="text-primary font-bold tracking-widest text-sm uppercase">La communauté avant tout</span>
-      <h2 class="text-5xl font-extrabold text-blue-900 leading-[1.1] font-headline">Votre portail vers le savoir partagé.</h2>
+      <h2 class="text-5xl font-extrabold text-blue-900 leading-[1.1] font-headline">Votre portail vers votre bulle de lecture.</h2>
     </div>
 
     <p class="text-on-surface-variant text-lg leading-relaxed max-w-md font-body">
-      Accédez à des milliers d’ouvrages, aux archives locales et aux événements communautaires via notre sanctuaire numérique. Conçu pour être accessible, pensé pour la communauté.
+      Accédez au catalogue de la bibliothèque.
     </p>
 
     <div class="pt-4 flex flex-col gap-4">
@@ -21,8 +21,8 @@
           <span class="material-symbols-outlined">menu_book</span>
         </div>
         <div>
-          <p class="font-bold text-on-surface">Parcourir la collection</p>
-          <p class="text-sm text-on-surface-variant">Plus de 1000 titres numériques et physiques.</p>
+          <p class="font-bold text-on-surface">Parcourir le catalogue</p>
+          <p class="text-sm text-on-surface-variant">Environ 2000 ouvrages empruntable dans votre bibliothèque communautaire.</p>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <p class="text-on-surface-variant font-body">Saisissez vos identifiants de bibliothèque pour continuer.</p>
       </div>
 
-      <form class="space-y-6">
+      <form #signupForm="ngForm" class="space-y-6">
         <!-- Email Field -->
         <div class="space-y-2">
           <label class="text-sm font-semibold text-on-surface-variant ml-1 font-label" for="email">
@@ -72,10 +72,19 @@
         </div>
 
         <!-- Sign In Button -->
-        <button class="w-full py-4 px-6 rounded-xl border border-outline-variant/30 text-on-surface font-semibold text-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" type="button" (click)="handleLogin()">
-          <span>Se connecter</span>
-          <span class="material-symbols-outlined text-lg">arrow_forward</span>
-        </button>
+        @if (signupForm.invalid) {
+          <button disabled class="w-full py-4 px-6 rounded-xl border border-outline-variant/30 text-on-surface font-semibold text-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" type="button" (click)="handleLogin()">
+            <span>Se connecter</span>
+            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+          </button>
+        } @else {
+          <button class="w-full py-4 px-6 bg-gradient-to-r rounded-xl border border-outline-variant/30 text-on-surface font-semibold text-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" type="button" (click)="handleLogin()">
+            <span>Se connecter</span>
+            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+          </button>
+        }
+
+
 
         @if (message()){
           <span class="text-red-600 text-sm font-medium mt-2 block">{{message()}}</span>
@@ -90,13 +99,6 @@
           </button>
         </div>
       </form>
-    </div>
-
-    <div class="mt-8 text-center md:text-left flex items-center gap-2 px-4">
-      <span class="material-symbols-outlined text-primary-container text-sm">verified_user</span>
-      <p class="text-xs text-on-surface-variant font-medium">
-        Sécurisé par les normes communautaires de BookHub
-      </p>
     </div>
   </div>
 </div>
