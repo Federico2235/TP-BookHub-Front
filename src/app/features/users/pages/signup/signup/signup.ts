@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, NgForm, Validators} from '@angular/forms';
 import {SignupRequest} from '../../../models/signupRequest.model';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../services/auth-service';
 import {UserService} from '../../../services/user-service';
 import {form} from '@angular/forms/signals';
@@ -9,7 +9,8 @@ import {form} from '@angular/forms/signals';
 @Component({
   selector: 'app-signup',
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
@@ -24,10 +25,16 @@ export class Signup {
   password: string = '';
   confirmedPassword: string = '';
 
+  message: string ='';
 
-  constructor(private router: Router, private userApi: UserService) {
+  get noMismatch(): boolean {
+    console.log(this.password === this.confirmedPassword);
+    return this.password === this.confirmedPassword;
 
   }
+
+
+  constructor(private router: Router, private userApi: UserService) {}
 
   handleSignup(){
     const signupRequest: SignupRequest = {
@@ -44,4 +51,14 @@ export class Signup {
       }
     })
   }
+  matchingPassword(){
+    if(!this.noMismatch){
+      this.message = "Les mots de passe doivent correspondre.";
+      console.log(this.message);
+    } else {
+      this.message = "";
+      console.log(this.message);
+    }
+  }
+
 }
