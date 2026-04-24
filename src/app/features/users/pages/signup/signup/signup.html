@@ -29,7 +29,7 @@
               <p class="text-error">Le prénom doit être renseigné</p>
             }
             @if (firstnameRef.errors?.['minlength']) {
-              <p class="text-error">Le prénom doit faire plus de 4 caractères</p>
+              <p class="text-error">Le prénom doit faire plus de 2 caractères</p>
             }
             </div>
           }
@@ -38,14 +38,14 @@
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Nom</label>
           <div class="relative group">
-            <input #lastnameRef="ngModel" required minlength="4" [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="lastname" name="lastname" placeholder="VANCE" type="text"/>
+            <input #lastnameRef="ngModel" required minlength="2" [(ngModel)]="lastName" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 rounded-xl px-4 py-4 text-on-surface focus:ring-primary focus:ring-2 transition-all duration-300 placeholder:text-outline" id="lastname" name="lastname" placeholder="VANCE" type="text"/>
           </div>
           @if (lastnameRef.invalid && lastnameRef.touched) {
             @if (lastnameRef.errors?.['required']) {
               <p class="text-error">Le nom de famille doit être renseigné</p>
             }
             @if (lastnameRef.errors?.['minlength']) {
-              <p class="text-error">Le nom de famille doit faire plus de 4 caractères</p>
+              <p class="text-error">Le nom de famille doit faire plus de 2 caractères</p>
             }
           }
         </div>
@@ -101,15 +101,21 @@
         </div>
 
         <!-- Primary CTA -->
-        <button [disabled]="signupForm.invalid" (click)="handleSignup()" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
-          Enregistrer
-        </button>
+        @if (signupForm.invalid) {
+          <button disabled (click)="handleSignup()" class="w-full bg-gray-100 from-primary to-primary-container text-gray-300 shadow-xl py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
+            Enregistrer
+          </button>
+        } @else {
+          <button (click)="handleSignup()" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
+            Enregistrer
+          </button>
+        }
       </form>
       <!-- Secondary Options -->
       <div class="mt-8 text-center">
         <p class="text-on-surface-variant">
           Vous avez déjà un compte ?
-          <a class="text-primary font-bold hover:underline ml-1" href="#">Connectez-vous (redirection)</a>
+          <a routerLink="/login" class="text-primary font-bold hover:underline ml-1" href="#">Connectez-vous (redirection)</a>
         </p>
       </div>
     </div>

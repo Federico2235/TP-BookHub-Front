@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {SignupRequest} from '../../../models/signupRequest.model';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../services/auth-service';
 import {UserService} from '../../../services/user-service';
 import {form} from '@angular/forms/signals';
@@ -9,7 +9,8 @@ import {form} from '@angular/forms/signals';
 @Component({
   selector: 'app-signup',
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
