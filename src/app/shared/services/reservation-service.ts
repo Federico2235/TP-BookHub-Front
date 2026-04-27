@@ -2,6 +2,7 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Reservation } from '../model/Reservation.model';
+import { ReservationRequest } from '../model/ReservationRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +24,9 @@ export class ReservationService {
 
   updateReservations(){
     this.getAllReservations()
+  }
+
+  reserveABook(reservation : ReservationRequest):Observable<Reservation>{
+    return this.http.post<Reservation>(this.API_URL,reservation)
   }
 }
