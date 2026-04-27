@@ -5,6 +5,7 @@ import { Login } from './features/users/pages/login/login';
 import { UserProfile } from './features/users/pages/profile/user-profile/user-profile';
 import { authGuardGuard } from './shared/guard/auth-guard-guard';
 import {Signup} from './features/users/pages/signup/signup/signup';
+import { LibrarianBoard } from './features/users/pages/librarian-board/librarian-board';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,9 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: Signup
+  },
+  {
+    path: 'librarian/board',
+    component: LibrarianBoard
   }
 ];
