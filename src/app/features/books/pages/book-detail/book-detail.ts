@@ -23,7 +23,8 @@ export class BookDetail {
 
   private readonly bookId = this.route.snapshot.paramMap.get('id');
   private readonly _book = this.bookService.getBookById(this.bookId!);
-  private readonly _user = this.userService.loggedUserSignal;
+  private readonly userId: string | null = this.route.snapshot.paramMap.get('id');
+
 
   bookSignal = toSignal(this._book);
   protected readonly AvailabilityStatus = AvailabilityStatus;
@@ -32,11 +33,31 @@ export class BookDetail {
     return book.status === AvailabilityStatus.AVAILABLE ? true : false;
   }
 
-  protected onClickReserve() {
+  protected onClickReserve(): void {
+    const user = this.userId
+    const bookId = Number(this.bookId);
+
+    console.log('user:', user);
+    console.log('user.id:', this.userId);
+    console.log('bookId (raw):', this.bookId);
+    console.log('bookId (number):', Number(this.bookId));
+    if (!user || !this.userId|| !bookId) {
+      console.error('No se puede reservar: falta userId o bookId');
+      return;
+    }
+
     const reservationRequest: ReservationRequest = {
-      userId: this._user,
-      bookId: this.bookId,
+      userId: Number(this.userId),
+      bookId: bookId,
     };
-    this.reservationService.reserveABook(this._user, this.bookId);
+
+    this.reservationService.reserveABook(reservationRequest).subscribe({
+      next: (reservation) => {
+        console.log('Livre reservé:', reservation);
+      },
+      error: (error) => {
+        console.error('Erreur dans la reservation:', error);
+      },
+    });
   }
 }
