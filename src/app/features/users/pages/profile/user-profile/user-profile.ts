@@ -18,11 +18,8 @@ import { BorrowService } from '../../../../../shared/services/borrow-service';
 })
 export class UserProfile {
   isLate(date: string | Date): boolean {
-    const d = new Date(date);
-    const today = new Date();
-    d.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-    return d < today;
+    const plannedDate = new Date(date);
+    return plannedDate < new Date();
   }
   private readonly router: Router = inject(Router);
   private readonly userService: UserService = inject(UserService);
