@@ -1,0 +1,103 @@
+<!-- Subtle Background Decorative Element -->
+<div class="absolute inset-0 pointer-events-none opacity-20 flex justify-center items-center">
+  <div class="w-[800px] h-[800px] bg-gradient-to-tr from-primary-fixed to-transparent rounded-full blur-[120px]"></div>
+</div>
+
+<div class="w-full max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center z-10">
+  <!-- Left Side: Editorial Content -->
+  <div class="hidden md:flex flex-col space-y-6">
+    <div class="space-y-2">
+      <span class="text-primary font-bold tracking-widest text-sm uppercase">La communauté avant tout</span>
+      <h2 class="text-5xl font-extrabold text-blue-900 leading-[1.1] font-headline">Votre portail vers votre bulle de lecture.</h2>
+    </div>
+
+    <p class="text-on-surface-variant text-lg leading-relaxed max-w-md font-body">
+      Accédez au catalogue de la bibliothèque.
+    </p>
+
+    <div class="pt-4 flex flex-col gap-4">
+      <div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-low ghost-border">
+        <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined">menu_book</span>
+        </div>
+        <div>
+          <p class="font-bold text-on-surface">Parcourir le catalogue</p>
+          <p class="text-sm text-on-surface-variant">Environ 2000 ouvrages empruntable dans votre bibliothèque communautaire.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Side: Login Card -->
+  <div class="flex flex-col items-center md:items-start">
+    <div class="w-full max-w-md bg-surface-container-lowest p-8 md:p-10 rounded-3xl shadow-2xl shadow-blue-900/5 relative overflow-hidden">
+      <!-- Subtle top gradient bar for premium feel -->
+      <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-primary-container"></div>
+
+      <div class="mb-8">
+        <h3 class="text-2xl font-bold text-on-surface mb-2 font-headline">Se connecter</h3>
+        <p class="text-on-surface-variant font-body">Saisissez vos identifiants de bibliothèque pour continuer.</p>
+      </div>
+
+      <form #signupForm="ngForm" class="space-y-6">
+        <!-- Email Field -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-on-surface-variant ml-1 font-label" for="email">
+            Adresse e-mail
+          </label>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline">
+              <span class="material-symbols-outlined text-xl">person</span>
+            </div>
+            <input #emailRef="ngModel" email class="block w-full pl-11 pr-4 py-4 bg-surface-container-low border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all font-body text-on-surface placeholder:text-outline/60 ghost-border ghost-border-focus" id="email" name="email" placeholder="m.archivist@community.org" type="email" [(ngModel)]="email"/>
+          </div>
+          @if (emailRef.invalid && emailRef.touched) {
+            <div>
+              @if (emailRef.errors?.['required']) {
+                <p class="text-error">L'email est obligatoire.</p>
+              }
+              @if (emailRef.errors?.['email']) {
+                <p class="text-error">Format email invalide.</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="space-y-2">
+          <div class="flex justify-between items-center ml-1">
+            <label class="text-sm font-semibold text-on-surface-variant font-label" for="password">
+              Mot de passe
+            </label>
+            <a class="text-xs font-bold text-primary hover:underline transition-all" href="#">
+              Mot de passe oublié ?
+            </a>
+          </div>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline">
+              <span class="material-symbols-outlined text-xl">lock</span>
+            </div>
+            <input class="block w-full pl-11 pr-4 py-4 bg-surface-container-low border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all font-body text-on-surface placeholder:text-outline/60 ghost-border ghost-border-focus" id="password" name="password" placeholder="••••••••" type="password" [(ngModel)]="password"/>
+          </div>
+        </div>
+
+        <!-- Sign In Button -->
+        <button class="w-full bg-gradient-to-r from-primary to-primary-container flex justify-center gap-2 text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="button" (click)="handleLogin()">
+          <span>Se connecter</span>
+          <span class="material-symbols-outlined text-lg inline-flex leading-none">arrow_forward</span>
+        </button>
+
+        @if (message()){
+          <span class="text-red-600 text-sm font-medium mt-2 block">{{message()}}</span>
+        }
+        <hr>
+        <div class="flex flex-col sm:flex-row">
+          <button routerLink="/signup" class="flex-1 py-3 px-4 rounded-xl border border-outline-variant/30 text-on-surface font-semibold text-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" type="button">
+            <span class="material-symbols-outlined text-lg">person_add</span>
+            Créer un compte
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

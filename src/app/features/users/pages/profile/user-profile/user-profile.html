@@ -1,0 +1,125 @@
+<h1 class="text-3xl font-bold mb-5">Mon profil</h1>
+<!-- Bento Grid Content Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- 1. Personal Information Section -->
+  <div class="lg:col-span-1 space-y-6">
+    <div class="bg-surface-container-low rounded-[2rem] p-8 transition-all hover:bg-surface-container/80 group">
+      <div class="flex items-center gap-4 mb-8">
+        <div
+          class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">badge</span>
+        </div>
+        <h3 class="text-xl font-bold tracking-tight">Informations Personnelles</h3>
+      </div>
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Nom</p>
+          <p class="text-xl font-medium text-on-surface">{{ user()?.lastName }}</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Prénom</p>
+          <p class="text-xl font-medium text-on-surface">{{ user()?.firstName }}</p>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Email</p>
+          <p class="text-lg font-medium text-on-surface">{{ user()?.email }}</p>
+        </div>
+        <div class="flex justify-between items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-outline mb-1">Mot de passe</p>
+            <p class="text-lg font-medium text-on-surface tracking-widest">••••••••</p>
+          </div>
+          <button class="text-primary text-sm font-bold hover:underline mb-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">edit</span>
+            Modifier
+          </button>
+        </div>
+      </div>
+      <button
+        class="mt-10 w-full py-4 px-6 bg-surface-container-lowest rounded-xl text-primary font-bold text-sm border border-outline-variant/15 hover:bg-white transition-all shadow-sm">
+        Éditer le profil public
+      </button>
+    </div>
+  </div>
+  <!-- Content Area: Loans & Reservations -->
+  <div class="lg:col-span-2 space-y-6">
+    <!-- 3. Current Loans List Section -->
+    <div class="bg-surface-container-lowest rounded-[2rem] p-8 border border-outline-variant/15">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold tracking-tight">Emprunts en cours</h3>
+        <span class="text-sm font-medium text-on-surface-variant">{{userBorrows()?.length??0}} documents actifs</span>
+      </div>
+      <div class="space-y-4">
+        @if (userBorrows() !== undefined) {
+
+          @for (borrow of userBorrows(); track borrow.borrowId) {
+
+        <div class="flex items-center gap-4 p-5 bg-error-container/30 border border-error/10 rounded-2xl">
+          <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+            <img alt="Book cover" class="w-full h-full object-cover"
+                 src="{{borrow.book.imgUrl}}"/>
+          </div>
+          <div class="flex-grow">
+            <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
+            <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
+          </div>
+          <div class="flex flex-col items-end">
+  <span
+    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
+    [ngClass]="isLate(borrow.borrowEnd) ? 'bg-error text-on-error' : 'bg-green-100 text-green-800'">
+
+    {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
+  </span>
+          </div>
+        </div>
+
+
+          }
+        } @else {
+          <p class="text-primary font-bold">Vous n'avez pas encore de réservations</p>
+        }
+      </div>
+    </div>
+    <!-- 2. Reservations List Section -->
+    <div class="bg-surface-container-low rounded-[2rem] p-8">
+      <h3 class="text-2xl font-bold tracking-tight mb-6">Mes Réservations</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        @if (userReservations() !== undefined) {
+
+          @for (reservation of userReservations(); track reservation.id) {
+
+            <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
+              <div class="flex items-start justify-between mb-4">
+                <div
+                  class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+                  <span class="material-symbols-outlined">menu_book</span>
+                </div>
+                @if (reservation.book.status !== AvailabilityStatus.AVAILABLE) {
+                  <span class="text-[11px] font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
+                } @else {
+                  <span class="text-[11px] font-bold uppercase bg-green-100 text-green-800 px-3 py-1 rounded-full">Disponible</span>
+                }
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex flex-col justify-baseline">
+                  <h4 class="font-bold text-lg mb-1">{{ reservation.book.title }}</h4>
+                  <p class="text-sm text-on-surface-variant mb-4">{{ reservation.book.author }}</p>
+                </div>
+                <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+                  <img alt="Book cover" class="w-full h-full object-cover" src="{{reservation.book.imgUrl}}" />
+                </div>
+              </div>
+              <div class="pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-primary">
+                <span class="material-symbols-outlined text-sm">event</span>
+                <span class="text-xs font-bold">Réservé depuis le {{ reservation.date | date : 'EEEE d MMMM y' }}</span>
+              </div>
+            </div>
+          }
+        } @else {
+          <p class="text-primary font-bold">Vous n'avez pas encore de réservations</p>
+        }
+      </div>
+    </div>
+  </div>
+</div>

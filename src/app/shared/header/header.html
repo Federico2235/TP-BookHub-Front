@@ -1,0 +1,30 @@
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none bg-surface-container-low/10 dark:bg-slate-800/20">
+  <div class="flex justify-between items-center px-8 py-4 max-w-full mx-auto">
+    <div class="flex items-center gap-8">
+      <span class="text-2xl font-bold tracking-tight text-blue-900 dark:text-blue-100">BookHub</span>
+      <nav class="hidden md:flex gap-6">
+        <a class="text-blue-900 dark:text-blue-400 font-semibold border-b-2 border-blue-900 dark:border-blue-400 pb-1 font-public-sans text-body-lg" href="#">Catalogue</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      @if (loggedUser(); as user){
+        <button (click)="navigateToProfile()" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
+          <span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+            <span class="text-on-surface font-medium">{{user.firstName}} {{user.lastName}}</span>
+        </button>
+        <button (click)="logout()" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
+          <span class="text-on-surface font-medium">Se déconnecter</span>
+        </button>
+      }
+
+      @if (!loggedUser()){
+        <button routerLink="/signup" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
+          Créer un compte
+        </button>
+        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
+          Se connecter
+        </button>
+      }
+    </div>
+  </div>
+</header>
