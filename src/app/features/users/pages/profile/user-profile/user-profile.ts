@@ -12,7 +12,7 @@ import { BorrowService } from '../../../../../shared/services/borrow-service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [DatePipe, JsonPipe, NgClass],
+  imports: [DatePipe, NgClass],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
