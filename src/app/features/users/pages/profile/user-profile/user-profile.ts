@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { UserService } from '../../../services/user-service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { User } from '../../../models/user.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReservationService } from '../../../../../shared/services/reservation-service';
@@ -24,6 +24,7 @@ export class UserProfile {
     today.setHours(0, 0, 0, 0);
     return d < today;
   }
+  private readonly router: Router = inject(Router);
   private readonly userService: UserService = inject(UserService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly reservationService: ReservationService = inject(ReservationService);
@@ -37,4 +38,10 @@ export class UserProfile {
     this.borrowService.getUserBorrows(this.userId!),
   );
   protected readonly AvailabilityStatus = AvailabilityStatus;
+
+  navigateToDetail(bookId: number) {
+    this.router.navigate(['detail', bookId]);
+  }
+
+
 }
