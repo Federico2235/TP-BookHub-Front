@@ -1,27 +1,31 @@
 <header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none bg-surface-container-low/10 dark:bg-slate-800/20">
   <div class="flex justify-between items-center px-8 py-4 max-w-full mx-auto">
-    <div class="flex items-center gap-8">
+    <div class="flex items-top justify-center gap-8">
       <span class="text-2xl font-bold tracking-tight text-blue-900 dark:text-blue-100">BookHub</span>
       <nav class="hidden md:flex gap-6">
-        <a class="text-blue-900 dark:text-blue-400 font-semibold border-b-2 border-blue-900 dark:border-blue-400 pb-1 font-public-sans text-body-lg" href="#">Catalogue</a>
+        <a
+           class=" relative inline-block
+            after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary
+            after:transition-all after:duration-300
+            hover:after:left-0 hover:after:w-full text-blue-900 dark:text-blue-400 font-semibold border-blue-900 dark:border-blue-400 font-public-sans py-2">Catalogue</a>
       </nav>
     </div>
     <div class="flex items-center gap-4">
       @if (loggedUser(); as user){
-        <button (click)="navigateToProfile()" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
-          <span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
-            <span class="text-on-surface font-medium">{{user.firstName}} {{user.lastName}}</span>
+        <button (click)="navigateToProfile()" class="group flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:bg-primary">
+          <span class="material-symbols-outlined text-primary group-hover:cursor-pointer group-hover:text-slate-100 transition-colors duration-300 ease-out" data-icon="account_circle">account_circle</span>
+            <span class="text-on-surface font-medium group-hover:text-slate-100">{{user.firstName}} {{user.lastName}}</span>
         </button>
-        <button (click)="logout()" class="flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer">
-          <span class="text-on-surface font-medium">Se déconnecter</span>
+        <button (click)="logout()" class=" group flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer hover:text-slate-100 hover:bg-primary">
+          <span class="text-on-surface font-medium group-hover:text-slate-100 transition-colors duration-300 ease-out">Se déconnecter</span>
         </button>
       }
 
       @if (!loggedUser()){
-        <button routerLink="/signup" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
+        <button routerLink="/signup" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer">
           Créer un compte
         </button>
-        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 transition-colors duration-300 cursor-pointer">
+        <button routerLink="/login" class="px-6 py-2 rounded-xl text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer">
           Se connecter
         </button>
       }
