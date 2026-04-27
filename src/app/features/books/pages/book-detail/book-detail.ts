@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BooksService } from '../../services/books-service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -8,6 +8,7 @@ import { ReservationService } from '../../../../shared/services/reservation-serv
 import { UserService } from '../../../users/services/user-service';
 import { LoginRequest } from '../../../users/models/loginRequest.model';
 import { ReservationRequest } from '../../../../shared/model/ReservationRequest.model';
+import { User } from '../../../users/models/user.model';
 
 @Component({
   selector: 'app-book-detail',
@@ -23,8 +24,7 @@ export class BookDetail {
 
   private readonly bookId = this.route.snapshot.paramMap.get('id');
   private readonly _book = this.bookService.getBookById(this.bookId!);
-  private readonly userId: string | null = this.route.snapshot.paramMap.get('id');
-
+  private readonly loggedUserSignal = this.userService.loggedUserSignal;
 
   bookSignal = toSignal(this._book);
   protected readonly AvailabilityStatus = AvailabilityStatus;
@@ -34,20 +34,20 @@ export class BookDetail {
   }
 
   protected onClickReserve(): void {
-    const user = this.userId
+    const user = this.loggedUserSignal()
     const bookId = Number(this.bookId);
 
     console.log('user:', user);
-    console.log('user.id:', this.userId);
+    console.log('user.id:', user?.id);
     console.log('bookId (raw):', this.bookId);
     console.log('bookId (number):', Number(this.bookId));
-    if (!user || !this.userId|| !bookId) {
+    if (!user || !this.loggedUserSignal|| !bookId) {
       console.error('No se puede reservar: falta userId o bookId');
       return;
     }
 
     const reservationRequest: ReservationRequest = {
-      userId: Number(this.userId),
+      userId: user.id,
       bookId: bookId,
     };
 
