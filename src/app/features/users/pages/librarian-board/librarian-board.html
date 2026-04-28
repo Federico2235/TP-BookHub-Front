@@ -56,10 +56,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-5">
   <!-- Reservations Management -->
   <section class="space-y-6">
-    <div>
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">Réservations</h2>
-      <p class="text-on-surface-variant">Titres en attente de retrait</p>
-    </div>
     <div class="space-y-4">
       @for (reservation of reservationsFiltered(); track reservation.id) {
         <div
@@ -114,14 +111,11 @@
   </section>
   <!-- Loans Tracking -->
   <section class="space-y-6">
-    <div>
-      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Emprunts</h2>
-      <p class="text-on-surface-variant">Livres en cours de circulation</p>
-    </div>
+      <h2 class="text-2xl font-bold tracking-tight text-on-surface">Emprunts en cours</h2>
     <div class="bg-surface-container-lowest rounded-3xl p-6 space-y-4">
-      @for (borrow of borrowsFiltered(); track borrow.borrowId) {
-        <div class="flex items-center justify-between p-4 rounded-xl border border-outline-variant/10">
-          <div class="flex items-center gap-3">
+      @for (borrow of currentBorrowsFiltered(); track borrow.borrowId) {
+        <div class="flex items-center justify-between gap-7 p-4 rounded-xl border border-outline-variant/10">
+          <div class="flex items-center gap-3 flex-1">
             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary">person</span>
             </div>
@@ -143,13 +137,22 @@
               <p class="text-sm font-bold text-primary">{{ borrow.borrowEnd | date: 'EEEE d MMMM y' }}</p>
             }
           </div>
+          @if(borrow.returnDate === null){
+            <button (click)="returnBorrow(borrow.borrowId)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-20 hover:opacity-100 transition-opacity hover:cursor-pointer">
+              Retourner emprunt
+            </button>
+          } @else {
+            <button disabled class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-0">
+              Retourner emprunt
+            </button>
+          }
         </div>
       }
       @if (borrows().length > 5) {
         @if (!areBorrowsDisplayed()) {
           <button (click)="viewAllBorrows()"
                   class="w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-colors hover:cursor-pointer">
-            Voir tous les emprunts
+            Voir plus
           </button>
         } @else {
           <button (click)="viewAllBorrows()"
