@@ -40,4 +40,8 @@ export class BorrowService {
     console.log('borrowCreate: ' + borrowCreate);
     return this.http.post<BorrowCreate>(this.API_URL, borrowCreate);
   }
+
+  returnBorrow(id:number){
+    return this.http.patch<Borrow>(this.API_URL+'/'+id+'/return-date', {returnDate: new Date()})
+  }
 }

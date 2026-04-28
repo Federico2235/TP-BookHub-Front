@@ -4,7 +4,7 @@ import { User } from '../../models/user.model';
 import { ReservationService } from '../../../../shared/services/reservation-service';
 import { BooksService } from '../../../books/services/books-service';
 import { BorrowService } from '../../../../shared/services/borrow-service';
-import { DatePipe, JsonPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { BookCondition } from '../../../books/models/bookCondition.model';
 import { AvailabilityStatus } from '../../../books/models/availabilityStatus.model';
 import { Reservation } from '../../../../shared/model/Reservation.model';
@@ -42,23 +42,28 @@ export class LibrarianBoard implements OnInit {
       .reverse()
       .slice(this.resaStartVal(), this.resaEndVal()),
   );
-
+  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null));
   areBorrowsDisplayed = signal<boolean>(false);
-  borrowsFiltered = computed(() =>
-    this.borrowService.allBorrows().reverse().slice(this.borrowsStartVal(), this.borrowsEndVal()),
+  currentBorrowsFiltered = computed(() =>
+    this.currentBorrows().reverse().slice(this.borrowsStartVal(), this.borrowsEndVal()),
   );
 
-  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null));
-  overdueLoans = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)));
+  overdueLoans = computed(() =>
+    this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)),
+  );
 
   ngOnInit(): void {
-    this.borrowService.updateBorrows();
-    this.bookService.updateBooks();
-    this.reservationService.updateReservations();
+    this.updateAll();
   }
 
   isLate(date: Date) {
     return this.borrowService.isLate(date);
+  }
+
+  updateAll() {
+    this.borrowService.updateBorrows();
+    this.bookService.updateBooks();
+    this.reservationService.updateReservations();
   }
 
   calculateDelay(returnDate: Date): number {
@@ -108,15 +113,15 @@ export class LibrarianBoard implements OnInit {
         borrowStart: today,
         borrowEnd: borrowEndDate,
       };
-      console.log('start:' + today);
-      console.log('end: ' + borrowEndDate);
-
       this.borrowService.convertReservationToBorrow(borrow).subscribe({
-        complete: () => {
-          this.borrowService.updateBorrows();
-          this.reservationService.updateReservations();
-        },
+        complete: () => this.updateAll(),
       });
     }
+  }
+
+  returnBorrow(id: number) {
+    this.borrowService.returnBorrow(id).subscribe({
+      complete: () => this.updateAll(),
+    });
   }
 }
