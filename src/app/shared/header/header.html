@@ -15,7 +15,7 @@
               Catalogue
             </a>
           </li>
-          @if (loggedUser() && (isLibrarian() || isAdmin())){
+          @if (loggedUser() && (isLibrarian())){
             <li>
               <a routerLink="/librarian/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
                  class="relative inline-block leading-none text-blue-900 dark:text-blue-400 font-semibold py-3
