@@ -51,17 +51,14 @@ export class Signup {
       }
     })
   }
-  matchingPassword(): boolean {
+  matchingPassword(){
     if(!this.noMismatch){
       this.message = "Les mots de passe doivent correspondre.";
       console.log(this.message);
-      return this.noMismatch;
     } else {
       this.message = "";
       console.log(this.message);
-      return this.noMismatch;
     }
   }
-
 
 }

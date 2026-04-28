@@ -94,12 +94,12 @@
               </div>
             }
           </div>
-          <p class="text-error">{{message}}</p>
+          <p>{{message}}</p>
         </div>
 
         <!-- Primary CTA -->
 
-        @if (signupForm.invalid || !matchingPassword()) {
+        @if (signupForm.invalid) {
           <button disabled (click)="handleSignup()" class="w-full bg-gray-100 from-primary to-primary-container text-gray-300 shadow-xl py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
             Enregistrer
           </button>

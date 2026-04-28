@@ -54,34 +54,26 @@
 
           @for (borrow of userBorrows(); track borrow.borrowId) {
 
-            <div class="flex items-center gap-4 p-5 bg-error-container/30 border border-error/10 rounded-2xl">
-              <button (click)="navigateToDetail(borrow.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
-                <img alt="Book cover" class="w-full h-full object-cover"
-                     src="{{borrow.book.imgUrl}}"/>
-              </button>
-              <div class="flex-grow">
-                <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
-                <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
-              </div>
-              <div class="flex flex-col items-end">
-                <!-- Ajout d'un if pour le cas ou le livre est retourné-->
+        <div class="flex items-center gap-4 p-5 bg-error-container/30 border border-error/10 rounded-2xl">
+          <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+            <img alt="Book cover" class="w-full h-full object-cover"
+                 src="{{borrow.book.imgUrl}}"/>
+          </div>
+          <div class="flex-grow">
+            <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
+            <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
+          </div>
+          <div class="flex flex-col items-end">
+  <span
+    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
+    [ngClass]="isLate(borrow.borrowEnd) ? 'bg-error text-on-error' : 'bg-green-100 text-green-800'">
 
-                @if (borrow.returnDate == null){
-                  <span
-                    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
-                    [ngClass]="isLate(borrow.borrowEnd) ? 'bg-error text-on-error' : 'bg-green-100 text-green-800'">
+    {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
+  </span>
+          </div>
+        </div>
 
-                    {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
-                  </span>
-                } @else {
-                  <span
-                    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider bg-blue-100 text-blue-800">
-                    <p>Rendu</p>
-                  </span>
-                }
 
-              </div>
-            </div>
           }
         } @else {
           <p class="text-primary font-bold">Vous n'avez pas encore de réservations</p>
@@ -114,9 +106,9 @@
                   <h4 class="font-bold text-lg mb-1">{{ reservation.book.title }}</h4>
                   <p class="text-sm text-on-surface-variant mb-4">{{ reservation.book.author }}</p>
                 </div>
-                <button (click)="navigateToDetail(reservation.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
+                <div class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
                   <img alt="Book cover" class="w-full h-full object-cover" src="{{reservation.book.imgUrl}}" />
-                </button>
+                </div>
               </div>
               <div class="pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-primary">
                 <span class="material-symbols-outlined text-sm">event</span>
