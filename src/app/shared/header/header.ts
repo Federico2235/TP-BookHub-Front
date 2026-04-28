@@ -16,6 +16,16 @@ export class Header {
 
   protected loggedUser = this.userService.loggedUserSignal
 
+  isLibrarian(): boolean{
+    const user = this.loggedUser();
+    return user?.role === "LIBRARIAN";
+  }
+
+  isAdmin(): boolean{
+    const user = this.loggedUser();
+    return user?.role === "ADMIN";
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
