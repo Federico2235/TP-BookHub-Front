@@ -20,4 +20,12 @@ export class UserService {
   signup(request: SignupRequest): Observable<SignupResponse> {
     return this.http.post<SignupResponse>(`${this.API_URL}`,request)
   }
+
+  isUserAdmin(){
+    return true;
+  }
+  isUserLibrarian(){
+    console.log(this.loggedUserSignal()?.role); // -> donne un undefined
+    return false;
+  }
 }
