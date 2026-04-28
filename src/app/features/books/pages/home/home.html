@@ -69,31 +69,26 @@
           <div class="space-y-2 mb-6 text-tertiary-container">
             <h3 class="text-xl font-bold text-on-surface leading-tight">{{book.title}}</h3>
             <p class="text-on-surface-variant font-medium">{{book.author}}</p>
-            @switch (book.status) {
-              @case (AvailabilityStatus.AVAILABLE) {
-                <div class="flex items-center gap-2 pt-2">
-                  <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                  <span class="text-sm font-semibold text-green-700">Disponible</span>
-                </div>
-              }
-              @case (AvailabilityStatus.RESERVED) {
-                <div class="flex items-center gap-2 pt-2">
-                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                  <span class="text-sm font-semibold text-blue-700">Réservé</span>
-                </div>
-              }
-              @case (AvailabilityStatus.BORROWED) {
-                <div class="flex items-center gap-2 pt-2">
-                  <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-                  <span class="text-sm font-semibold text-orange-700">Emprunté</span>
-                </div>
-              }
-              @case (AvailabilityStatus.BLOCKED) {
-                <div class="flex items-center gap-2 pt-2">
-                  <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                  <span class="text-sm font-semibold text-red-700">Réservé</span>
-                </div>
-              }
+            @if (book.status === AvailabilityStatus.AVAILABLE && !book.reserved) {
+              <div class="flex items-center gap-2 pt-2">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                <span class="text-sm font-semibold text-green-700">Disponible</span>
+              </div>
+            } @else if (book.reserved) {
+              <div class="flex items-center gap-2 pt-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span class="text-sm font-semibold text-blue-700">Réservé</span>
+              </div>
+            } @else if (book.status === AvailabilityStatus.BORROWED) {
+              <div class="flex items-center gap-2 pt-2">
+                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                <span class="text-sm font-semibold text-orange-700">Emprunté</span>
+              </div>
+            } @else if (book.status === AvailabilityStatus.BLOCKED) {
+              <div class="flex items-center gap-2 pt-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                <span class="text-sm font-semibold text-red-700">Indisponible</span>
+              </div>
             }
           </div>
           <div class="group relative w-full py-3 bg-surface-container-lowest text-primary font-bold flex justify-center rounded-xl border-2 border-outline-variant/15 cursor-pointer">
