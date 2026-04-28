@@ -2,6 +2,7 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Borrow } from '../model/Borrow.model.ts';
+import { BorrowCreate } from '../model/BorrowCreate.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +10,13 @@ import { Borrow } from '../model/Borrow.model.ts';
 export class BorrowService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly API_URL = 'http://localhost:8080/api/borrows';
-  allBorrows: WritableSignal<Borrow[]> = signal<Borrow[]>([])
+  allBorrows: WritableSignal<Borrow[]> = signal<Borrow[]>([]);
 
   getAllBorrows() {
     const result = this.http.get<Borrow[]>(this.API_URL);
-    result.subscribe({next: (borrows) =>  this.allBorrows.set(borrows)})
+    result.subscribe({
+      next: (borrows) => this.allBorrows.set(borrows),
+    });
     return result;
   }
 
@@ -31,5 +34,10 @@ export class BorrowService {
 
   updateBorrows() {
     this.getAllBorrows();
+  }
+
+  convertReservationToBorrow(borrowCreate: BorrowCreate) {
+    console.log('borrowCreate: ' + borrowCreate);
+    return this.http.post<BorrowCreate>(this.API_URL, borrowCreate);
   }
 }
