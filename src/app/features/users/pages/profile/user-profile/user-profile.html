@@ -46,15 +46,13 @@
     <!-- 3. Current Loans List Section -->
     <div class="bg-surface-container-lowest rounded-[2rem] p-8 border border-outline-variant/15">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-bold tracking-tight">Emprunts en cours</h3>
+        <h3 class="text-2xl font-bold tracking-tight">Emprunts</h3>
         <span class="text-sm font-medium text-on-surface-variant">{{userBorrows()?.length??0}} documents actifs</span>
       </div>
       <div class="space-y-4">
         @if (userBorrows() !== undefined) {
-
           @for (borrow of userBorrows(); track borrow.borrowId) {
-
-            <div class="flex items-center gap-4 p-5 bg-error-container/30 border border-error/10 rounded-2xl">
+            <div class="flex items-center gap-4 p-5 border border-surface-container rounded-2xl">
               <button (click)="navigateToDetail(borrow.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
                 <img alt="Book cover" class="w-full h-full object-cover"
                      src="{{borrow.book.imgUrl}}"/>
@@ -65,7 +63,6 @@
               </div>
               <div class="flex flex-col items-end">
                 <!-- Ajout d'un if pour le cas ou le livre est retourné-->
-
                 @if (borrow.returnDate == null){
                   <span
                     class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
@@ -73,13 +70,13 @@
 
                     {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
                   </span>
-                } @else {
+                }
+                @if(borrow.returnDate !== null) {
                   <span
                     class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider bg-blue-100 text-blue-800">
                     <p>Rendu</p>
                   </span>
                 }
-
               </div>
             </div>
           }
