@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import {SignupRequest} from '../models/signupRequest.model';
 import {SignupResponse} from '../models/signupResponse.model';
+import {Role} from '../../books/models/role.model';
 
 @Injectable({
   providedIn: 'root',

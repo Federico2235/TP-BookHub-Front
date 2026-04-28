@@ -6,6 +6,9 @@ import { UserProfile } from './features/users/pages/profile/user-profile/user-pr
 import { authGuardGuard } from './shared/guard/auth-guard-guard';
 import {Signup} from './features/users/pages/signup/signup/signup';
 import { LibrarianBoard } from './features/users/pages/librarian-board/librarian-board';
+import {librarianGuard} from './shared/guard/librarian-guard';
+import {TestComponent} from './features/users/pages/test-component/test-component';
+import {adminGuard} from './shared/guard/admin-guard';
 
 export const routes: Routes = [
   {
@@ -31,6 +34,12 @@ export const routes: Routes = [
   },
   {
     path: 'librarian/board',
-    component: LibrarianBoard
+    component: LibrarianBoard,
+    canActivate: [authGuardGuard, librarianGuard]
+  },
+  {
+    path: 'admin',
+    component: TestComponent,
+    canActivate: [authGuardGuard, adminGuard]
   }
 ];
