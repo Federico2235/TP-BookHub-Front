@@ -6,10 +6,14 @@ import { Book } from '../../models/book.model';
 import { ReservationService } from '../../../../shared/services/reservation-service';
 import { UserService } from '../../../users/services/user-service';
 import { ReservationRequest } from '../../../../shared/model/ReservationRequest.model';
+import { Borrow } from '../../../../shared/model/Borrow.model.ts';
+import { BorrowService } from '../../../../shared/services/borrow-service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-book-detail',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './book-detail.html',
   styleUrl: './book-detail.css',
 })
@@ -19,12 +23,13 @@ export class BookDetail {
   private readonly bookService = inject(BooksService);
   private readonly reservationService = inject(ReservationService);
   private readonly userService = inject(UserService);
+  private readonly borrowService = inject(BorrowService);
 
   private readonly bookId = this.route.snapshot.paramMap.get('id');
   private readonly loggedUserSignal = this.userService.loggedUserSignal;
 
   protected readonly AvailabilityStatus = AvailabilityStatus;
-
+  borrowSignal = signal<Borrow | undefined>(undefined);
   bookSignal = signal<Book | undefined>(undefined);
   userReservationsCount = signal<number | null>(null);
 
@@ -36,11 +41,24 @@ export class BookDetail {
     }, 500);
   }
 
+  private loadBookBorrow(bookId: number): void {
+    this.borrowService.getBookBorrow(bookId).subscribe({
+      next: (borrow) => this.borrowSignal.set(borrow),
+      error: (error) => console.error('Erreur chargement emprunt:', error),
+    });
+  }
+
   private loadBook(): void {
     if (!this.bookId) return;
 
     this.bookService.getBookById(this.bookId).subscribe({
-      next: (book) => this.bookSignal.set(book),
+      next: (book) => {
+        this.bookSignal.set(book);
+
+        if (book.status === AvailabilityStatus.BORROWED || book.reserved) {
+          this.loadBookBorrow(book.id);
+        }
+      },
       error: (error) => console.error('Erreur chargement livre:', error),
     });
   }
@@ -119,7 +137,7 @@ export class BookDetail {
     this.reservationService.reserveABook(reservationRequest).subscribe({
       next: () => {
         this.loadBook();
-        this.loadUserReservationsCount()
+        this.loadUserReservationsCount();
       },
       error: (error) => {
         console.error('Erreur dans la reservation:', error);

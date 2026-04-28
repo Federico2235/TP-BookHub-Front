@@ -85,9 +85,11 @@
               Réserver ce livre
             </button>
 
-            <p class="text-sm text-gray-500 mt-2">
-            Disponible à partir du <!--   {{ borrow.borrowEnd | date:'dd/MM/yyyy' }}-->
-            </p>
+              @if (borrowSignal(); as borrow) {
+                <p class="text-sm text-gray-500 mt-2">
+                  Disponible à partir du {{ borrow.borrowEnd | date:'dd/MM/yyyy' }}
+                </p>
+              }
             </div>
           }
         } @else {

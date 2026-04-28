@@ -24,6 +24,10 @@ export class BorrowService {
     return this.http.get<Borrow[]>(this.API_URL + '/user/' + id);
   }
 
+  getBookBorrow(id: number | undefined): Observable<Borrow> {
+    return this.http.get<Borrow>(this.API_URL + '/book/' + id);
+  }
+
   isLate(date: string | Date): boolean {
     const d = new Date(date);
     const today = new Date();
