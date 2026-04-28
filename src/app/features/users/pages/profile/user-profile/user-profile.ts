@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { UserService } from '../../../services/user-service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { User } from '../../../models/user.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReservationService } from '../../../../../shared/services/reservation-service';
@@ -12,18 +12,16 @@ import { BorrowService } from '../../../../../shared/services/borrow-service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [DatePipe, JsonPipe, NgClass],
+  imports: [DatePipe, NgClass],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
 export class UserProfile {
   isLate(date: string | Date): boolean {
-    const d = new Date(date);
-    const today = new Date();
-    d.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-    return d < today;
+    const plannedDate = new Date(date);
+    return plannedDate < new Date();
   }
+  private readonly router: Router = inject(Router);
   private readonly userService: UserService = inject(UserService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly reservationService: ReservationService = inject(ReservationService);
@@ -37,4 +35,10 @@ export class UserProfile {
     this.borrowService.getUserBorrows(this.userId!),
   );
   protected readonly AvailabilityStatus = AvailabilityStatus;
+
+  navigateToDetail(bookId: number) {
+    this.router.navigate(['detail', bookId]);
+  }
+
+
 }
