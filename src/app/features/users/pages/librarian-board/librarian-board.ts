@@ -8,10 +8,11 @@ import { DatePipe, JsonPipe } from '@angular/common';
 import { BookCondition } from '../../../books/models/bookCondition.model';
 import { AvailabilityStatus } from '../../../books/models/availabilityStatus.model';
 import { Reservation } from '../../../../shared/model/Reservation.model';
+import { BorrowCreate } from '../../../../shared/model/BorrowCreate.model';
 
 @Component({
   selector: 'app-librarian-board',
-  imports: [DatePipe, JsonPipe],
+  imports: [DatePipe],
   templateUrl: './librarian-board.html',
   styleUrl: './librarian-board.css',
 })
@@ -31,20 +32,24 @@ export class LibrarianBoard implements OnInit {
 
   user: WritableSignal<User | null> = this.userService.loggedUserSignal;
   books = this.bookService.allBooks.asReadonly();
+  borrows = this.borrowService.allBorrows.asReadonly();
 
   areReservationsDisplayed = signal<boolean>(false);
   reservations = this.reservationService.allReservations.asReadonly();
   reservationsFiltered: Signal<Reservation[]> = computed(() =>
-    this.reservationService.allReservations().slice(this.resaStartVal(), this.resaEndVal()),
+    this.reservationService
+      .allReservations()
+      .reverse()
+      .slice(this.resaStartVal(), this.resaEndVal()),
   );
 
   areBorrowsDisplayed = signal<boolean>(false);
-  borrows = this.borrowService.allBorrows.asReadonly();
   borrowsFiltered = computed(() =>
-    this.borrowService.allBorrows().slice(this.borrowsStartVal(), this.borrowsEndVal()),
+    this.borrowService.allBorrows().reverse().slice(this.borrowsStartVal(), this.borrowsEndVal()),
   );
 
-  overdueLoans = computed(() => this.borrows()?.filter((borrow) => borrow.returnDate < new Date()));
+  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null));
+  overdueLoans = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)));
 
   ngOnInit(): void {
     this.borrowService.updateBorrows();
@@ -52,7 +57,7 @@ export class LibrarianBoard implements OnInit {
     this.reservationService.updateReservations();
   }
 
-  isLate(date: string) {
+  isLate(date: Date) {
     return this.borrowService.isLate(date);
   }
 
@@ -90,6 +95,28 @@ export class LibrarianBoard implements OnInit {
       this.areReservationsDisplayed.set(false);
       this.resaStartVal.set(0);
       this.resaEndVal.set(4);
+    }
+  }
+
+  convertToBorrow(reservation: Reservation) {
+    if (reservation.user.userId) {
+      const today: Date = new Date();
+      const borrowEndDate: Date = new Date(new Date().setDate(new Date().getDate() + 13));
+      const borrow: BorrowCreate = {
+        userId: reservation.user.userId,
+        bookId: reservation.book.id,
+        borrowStart: today,
+        borrowEnd: borrowEndDate,
+      };
+      console.log('start:' + today);
+      console.log('end: ' + borrowEndDate);
+
+      this.borrowService.convertReservationToBorrow(borrow).subscribe({
+        complete: () => {
+          this.borrowService.updateBorrows();
+          this.reservationService.updateReservations();
+        },
+      });
     }
   }
 }
