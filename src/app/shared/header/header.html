@@ -15,25 +15,28 @@
               Catalogue
             </a>
           </li>
-          <li>
-            <a routerLink="" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-              class="relative inline-block leading-none text-blue-900 dark:text-blue-400 font-semibold py-3
+          @if (loggedUser() && (isLibrarian() || isAdmin())){
+            <li>
+              <a routerLink="endpoint" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
+                 class="relative inline-block leading-none text-blue-900 dark:text-blue-400 font-semibold py-3
                 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
-              Gestion emprunts ?
-            </a>
-          </li>
-          <!--@if (loggedUser() && ){}-->
-          <li>
-            <a routerLink="/librarian/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-               class="relative inline-block leading-none text-blue-900 dark:text-blue-400 font-semibold py-3
-                after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
-              Dashboard
-            </a>
-          </li>
+                Gestion emprunts
+              </a>
+            </li>
+          }
+          @if (loggedUser() && isAdmin()){
+            <li>
+              <a routerLink="/librarian/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
+                 class="relative inline-block leading-none text-blue-900 dark:text-blue-400 font-semibold py-3
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
+                Dashboard
+              </a>
+            </li>
+          }
         </ul>
         <div class="flex items-center gap-4">
           @if (loggedUser(); as user){
-            <a (click)="navigateToProfile()" class="group flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:bg-primary">
+            <a (click)="navigateToProfile()" class="group flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:bg-primary cursor-pointer">
               <span class="material-symbols-outlined text-primary group-hover:cursor-pointer group-hover:text-slate-100 transition-colors duration-300 ease-out" data-icon="account_circle">account_circle</span>
               <span class="text-on-surface font-medium group-hover:text-slate-100">{{user.firstName}} {{user.lastName}}</span>
             </a>
