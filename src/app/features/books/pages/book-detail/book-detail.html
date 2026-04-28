@@ -72,16 +72,43 @@
         }
       </div>
       <div class="pt-8 flex flex-col sm:flex-row gap-4">
-        @if(isBookBorrowable(book)) {
+        @if(canShowReserveButton(book)) {
+          @if (isBookAvailable(book)){
+
           <button (click)="onClickReserve()" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 px-12 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">book_5</span>
             Réserver ce livre
-          </button>
+          </button>} @else {
+            <div>
+            <button (click)="onClickReserve()" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 px-12 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">book_5</span>
+              Réserver ce livre
+            </button>
+
+            <p class="text-sm text-gray-500 mt-2">
+            Disponible à partir du <!--   {{ borrow.borrowEnd | date:'dd/MM/yyyy' }}-->
+            </p>
+            </div>
+          }
         } @else {
+          <div>
           <button disabled class="flex flex-1 py-5 justify-center items-center bg-gray-100 gap-2 px-12 rounded-xl font-bold text-lg  text-gray-300 shadow-xl" (click)="onClickReserve()">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#d1d5dc"><path d="M324-111.5Q251-143 197-197t-85.5-127Q80-397 80-480t31.5-156Q143-709 197-763t127-85.5Q397-880 480-880t156 31.5Q709-817 763-763t85.5 127Q880-563 880-480t-31.5 156Q817-251 763-197t-127 85.5Q563-80 480-80t-156-31.5ZM480-160q54 0 104-17.5t92-50.5L228-676q-33 42-50.5 92T160-480q0 134 93 227t227 93Zm252-124q33-42 50.5-92T800-480q0-134-93-227t-227-93q-54 0-104 17.5T284-732l448 448ZM480-480Z"/></svg>
             <p>Réserver ce livre</p>
           </button>
+            @if (isLoggedIn() && reservationsCountLoaded()) {
+
+              @if (userReachedReservationLimit()) {
+                <p class="text-bg text-gray-800 mt-2">
+                  Maximum de réservations atteint
+                </p>
+              } @else if (isBookReserved(book)) {
+                <p class="text-bg text-gray-800 mt-2">
+                  Livre déjà réservé
+                </p>
+              }
+            }
+          </div>
         }
         <div class="sm:w-1/3 p-5 bg-surface-container-low rounded-xl flex items-center gap-4">
           <span class="material-symbols-outlined text-primary">history</span>

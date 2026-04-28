@@ -12,7 +12,9 @@ import { AvailabilityStatus } from '../../models/availabilityStatus.model';
 })
 export class Home {
   private bookService = inject(BooksService);
-
+  constructor() {
+    console.log('Home created');
+  }
   _books = this.bookService.getBooks();
   protected readonly AvailabilityStatus = AvailabilityStatus;
 }
