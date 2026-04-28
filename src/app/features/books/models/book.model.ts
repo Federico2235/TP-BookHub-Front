@@ -12,4 +12,5 @@ export interface Book {
   shortDesc?: string;
   longDesc?: string;
   imgUrl: string;
+  reserved:boolean;
 }
