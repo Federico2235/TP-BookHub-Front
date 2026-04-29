@@ -70,8 +70,18 @@
                  src="{{reservation.book.imgUrl}}" />
           </div>
           <div class="flex-1">
-            <p class="font-bold text-on-surface">{{ reservation.book.title }}</p>
-            <p class="text-sm text-on-surface-variant">{{ reservation.book.author }}</p>
+            <div class="flex justify-between">
+              <div class="flex flex-col">
+                <p class="font-bold text-on-surface">{{ reservation.book.title }}</p>
+                <p class="text-sm text-on-surface-variant">{{ reservation.book.author }}</p>
+              </div>
+              @if (reservation.book.status !== AvailabilityStatus.AVAILABLE) {
+                <span class="text-[11px] max-h-6 text-center font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
+              } @else {
+                <span class="text-[11px] max-h-6 text-center font-bold uppercase bg-green-100 text-green-800 px-3 py-1 rounded-full">Disponible</span>
+              }
+            </div>
+
             <div class="mt-2 flex items-center gap-2">
               <span class="material-symbols-outlined text-xs">person</span>
               <span
@@ -79,20 +89,25 @@
                 le {{ reservation.date | date : 'EEEE d MMMM y' }}</span>
             </div>
           </div>
-          <div class="flex flex-col gap-3 w-1/5">
-            @if (reservation.book.status !== AvailabilityStatus.AVAILABLE) {
-              <span class="text-[11px] text-center font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
-            } @else {
-              <span class="text-[11px] text-center font-bold uppercase bg-green-100 text-green-800 px-3 py-1 rounded-full">Disponible</span>
-            }
+          <div class="flex flex-col items-center gap-3 w-1/4">
             @if (reservation.book.status !== AvailabilityStatus.AVAILABLE || user() === null) {
-              <button disabled class="px-4 py-2 bg-red-100 text-red-800 rounded-lg text-xs font-bold shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-                En attente
-              </button>
+              <div class="flex flex-col gap-3">
+                <button disabled class="px-4 py-2 bg-red-50 text-red-200 rounded-lg text-xs font-bold shadow-md opacity-20 group-hover:opacity-100 transition-opacity">
+                  En attente
+                </button>
+                <button (click)="cancelReservation(reservation.id)" class="px-4 py-2 bg-red-100 text-red-800 rounded-lg text-xs font-bold shadow-md opacity-20 group-hover:opacity-100 transition-opacity hover:cursor-pointer">
+                  Annuler
+                </button>
+              </div>
             } @else {
-              <button (click)="convertToBorrow(reservation)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-0 group-hover:opacity-100 transition-opacity hover:cursor-pointer">
-                Convertir en emprunt
-              </button>
+              <div class="flex flex-col gap-3">
+                <button (click)="convertToBorrow(reservation)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-20 group-hover:opacity-100 transition-opacity hover:cursor-pointer">
+                  Emprunter
+                </button>
+                <button (click)="cancelReservation(reservation.id)" class="px-4 py-2 bg-red-100 text-red-800 rounded-lg text-xs font-bold shadow-md opacity-20 group-hover:opacity-100 transition-opacity hover:cursor-pointer">
+                  Annuler
+                </button>
+              </div>
             }
           </div>
         </div>
@@ -108,7 +123,7 @@
 
     <div class="bg-surface-container-lowest max-h-125 rounded-3xl p-6 space-y-4 overflow-y-auto">
       @for (borrow of currentBorrowsFiltered(); track borrow.borrowId) {
-        <div class="flex items-center bg-gray-100 justify-between gap-7 p-4 rounded-xl min-h-20">
+        <div class="flex items-center bg-surface-container-low justify-between gap-7 p-4 rounded-xl min-h-20 group hover:bg-surface-container-high transition-colors">
           <div class="flex items-center gap-3 flex-1">
             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary">person</span>
@@ -132,7 +147,7 @@
             }
           </div>
           @if(borrow.returnDate === null){
-            <button (click)="returnBorrow(borrow.borrowId)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-20 hover:opacity-100 transition-opacity hover:cursor-pointer">
+            <button (click)="returnBorrow(borrow.borrowId)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-20 group-hover:opacity-100 transition-opacity hover:cursor-pointer">
               Retourner emprunt
             </button>
           } @else {

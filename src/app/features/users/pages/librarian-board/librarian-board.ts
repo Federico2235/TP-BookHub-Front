@@ -43,23 +43,25 @@ export class LibrarianBoard {
   reservations = this.reservationService.allReservations.asReadonly();
 
   //Computed values as Signals
-  currentBorrows = computed(() =>
-    this.borrows()
-      .filter((borrow) => borrow.returnDate === null)
-  );
+  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null));
   overdueLoans = computed(() =>
     this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)),
   );
   reservationsFiltered = computed(() =>
-    this.reservations().filter(resa => resa.book.title.toLowerCase().includes(this.searchReservationForm().value().toLowerCase()))
+    this.reservations().filter((resa) =>
+      resa.book.title.toLowerCase().includes(this.searchReservationForm().value().toLowerCase()),
+    ),
   );
   currentBorrowsFiltered = computed(() =>
-    this.currentBorrows().filter(borrow => borrow.book.title.toLowerCase().includes(this.searchBorrowsForm().value().toLowerCase()))
+    this.currentBorrows().filter((borrow) =>
+      borrow.book.title.toLowerCase().includes(this.searchBorrowsForm().value().toLowerCase()),
+    ),
   );
   booksFiltered = computed(() =>
-    this.books().filter(book => book.title.toLowerCase().includes(this.searchBookForm().value().toLowerCase()))
-  )
-
+    this.books().filter((book) =>
+      book.title.toLowerCase().includes(this.searchBookForm().value().toLowerCase()),
+    ),
+  );
 
   constructor() {
     this.updateAll();
@@ -106,6 +108,12 @@ export class LibrarianBoard {
 
   returnBorrow(id: number) {
     this.borrowService.returnBorrow(id).subscribe({
+      complete: () => this.updateAll(),
+    });
+  }
+
+  cancelReservation(id: number) {
+    this.reservationService.deleteReservation(id).subscribe({
       complete: () => this.updateAll(),
     });
   }
