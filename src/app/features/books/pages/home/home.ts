@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { BooksService } from '../../services/books-service';
-import { AsyncPipe, JsonPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AvailabilityStatus } from '../../models/availabilityStatus.model';
 import { form, FormField } from '@angular/forms/signals';

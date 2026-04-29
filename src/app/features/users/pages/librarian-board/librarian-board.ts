@@ -16,7 +16,7 @@ import { BorrowCreate } from '../../../../shared/model/BorrowCreate.model';
   templateUrl: './librarian-board.html',
   styleUrl: './librarian-board.css',
 })
-export class LibrarianBoard implements OnInit {
+export class LibrarianBoard {
   private userService: UserService = inject(UserService);
   private reservationService: ReservationService = inject(ReservationService);
   private bookService: BooksService = inject(BooksService);
@@ -25,35 +25,17 @@ export class LibrarianBoard implements OnInit {
   protected readonly BookCondition = BookCondition;
   protected readonly AvailabilityStatus = AvailabilityStatus;
 
-  private readonly borrowsStartVal: WritableSignal<number | undefined> = signal(0);
-  private readonly borrowsEndVal: WritableSignal<number | undefined> = signal(5);
-  private readonly resaStartVal: WritableSignal<number | undefined> = signal(0);
-  private readonly resaEndVal: WritableSignal<number | undefined> = signal(4);
-
   user: WritableSignal<User | null> = this.userService.loggedUserSignal;
   books = this.bookService.allBooks.asReadonly();
   borrows = this.borrowService.allBorrows.asReadonly();
-
-  areReservationsDisplayed = signal<boolean>(false);
   reservations = this.reservationService.allReservations.asReadonly();
-  reservationsFiltered: Signal<Reservation[]> = computed(() =>
-    this.reservationService
-      .allReservations()
-      .reverse()
-      .slice(this.resaStartVal(), this.resaEndVal()),
-  );
-  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null));
-  areBorrowsDisplayed = signal<boolean>(false);
-  currentBorrowsFiltered = computed(() =>
-    this.currentBorrows().reverse().slice(this.borrowsStartVal(), this.borrowsEndVal()),
-  );
-
+  currentBorrows = computed(() => this.borrows().filter((borrow) => borrow.returnDate === null).reverse());
   overdueLoans = computed(() =>
     this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)),
   );
 
-  ngOnInit(): void {
-    this.updateAll();
+  constructor() {
+    this.updateAll()
   }
 
   isLate(date: Date) {
@@ -77,30 +59,6 @@ export class LibrarianBoard implements OnInit {
     const diffMs = today.getTime() - bookReturnDate.getTime();
 
     return Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  }
-
-  protected viewAllBorrows() {
-    if (!this.areBorrowsDisplayed()) {
-      this.borrowsStartVal.set(undefined);
-      this.borrowsEndVal.set(undefined);
-      this.areBorrowsDisplayed.set(true);
-    } else {
-      this.areBorrowsDisplayed.set(false);
-      this.borrowsStartVal.set(0);
-      this.borrowsEndVal.set(5);
-    }
-  }
-
-  protected viewAllReservations() {
-    if (!this.areReservationsDisplayed()) {
-      this.resaStartVal.set(undefined);
-      this.resaEndVal.set(undefined);
-      this.areReservationsDisplayed.set(true);
-    } else {
-      this.areReservationsDisplayed.set(false);
-      this.resaStartVal.set(0);
-      this.resaEndVal.set(4);
-    }
   }
 
   convertToBorrow(reservation: Reservation) {

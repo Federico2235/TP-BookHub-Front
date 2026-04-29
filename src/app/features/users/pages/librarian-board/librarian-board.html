@@ -55,10 +55,10 @@
 <!-- Reservations & Loans Grid -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-5">
   <!-- Reservations Management -->
-  <section class="space-y-6">
+  <section class="space-y-6 ">
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">Réservations</h2>
-    <div class="space-y-4">
-      @for (reservation of reservationsFiltered(); track reservation.id) {
+    <div class="space-y-4 overflow-y-auto max-h-125 rounded-3xl">
+      @for (reservation of reservations(); track reservation.id) {
         <div
           class="p-6 bg-surface-container-low rounded-2xl flex items-center gap-6 group hover:bg-surface-container-high transition-colors">
           <div class="w-14 h-20 rounded-lg bg-surface-container-lowest shrink-0 shadow-sm overflow-hidden">
@@ -94,27 +94,14 @@
           </div>
         </div>
       }
-      @if (reservations().length > 4) {
-        @if (!areReservationsDisplayed()) {
-          <button (click)="viewAllReservations()"
-                  class="w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-colors hover:cursor-pointer">
-            Voir toutes les réservations
-          </button>
-        } @else {
-          <button (click)="viewAllReservations()"
-                  class="w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-colors hover:cursor-pointer">
-            Voir moins
-          </button>
-        }
-      }
     </div>
   </section>
   <!-- Loans Tracking -->
-  <section class="space-y-6">
+  <section class="space-y-6 bg-surface-container-highest rounded-3xl p-3">
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">Emprunts en cours</h2>
-    <div class="bg-surface-container-lowest rounded-3xl p-6 space-y-4">
-      @for (borrow of currentBorrowsFiltered(); track borrow.borrowId) {
-        <div class="flex items-center justify-between gap-7 p-4 rounded-xl border border-outline-variant/10">
+    <div class="bg-surface-container-lowest max-h-125 rounded-3xl p-6 space-y-4 overflow-y-auto">
+      @for (borrow of currentBorrows(); track borrow.borrowId) {
+        <div class="flex items-center bg-gray-100 justify-between gap-7 p-4 rounded-xl">
           <div class="flex items-center gap-3 flex-1">
             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary">person</span>
@@ -148,19 +135,6 @@
           }
         </div>
       }
-      @if (borrows().length > 5) {
-        @if (!areBorrowsDisplayed()) {
-          <button (click)="viewAllBorrows()"
-                  class="w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-colors hover:cursor-pointer">
-            Voir plus
-          </button>
-        } @else {
-          <button (click)="viewAllBorrows()"
-                  class="w-full py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-colors hover:cursor-pointer">
-            Voir moins
-          </button>
-        }
-      }
     </div>
   </section>
 </div>
@@ -188,7 +162,8 @@
       <tr class="bg-surface-container-low text-on-surface-variant text-[11px] font-black uppercase tracking-widest">
         <th class="px-8 py-5">Livre</th>
         <th class="px-8 py-5">Etat</th>
-        <th class="px-8 py-5">Disponibilité</th>
+        <th class="px-8 py-5 text">Disponibilité</th>
+        <th class="px-8 py-5 text-center">Réservé</th>
         <th class="px-8 py-5 text-right">Actions</th>
       </tr>
       </thead>
@@ -254,6 +229,13 @@
                 </td>
               }
             }
+            <td class="px-8 py-6 text-right">
+              <div class="flex justify-center">
+                @if (book.reserved) {
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1a56ad"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                }
+              </div>
+            </td>
             <td class="px-8 py-6 text-right">
               <div class="flex justify-end gap-2">
                 <button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-colors"><span
