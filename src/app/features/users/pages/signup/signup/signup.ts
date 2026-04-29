@@ -28,7 +28,7 @@ export class Signup {
   message: string ='';
 
   get noMismatch(): boolean {
-    console.log(this.password === this.confirmedPassword);
+
     return this.password === this.confirmedPassword;
 
   }
@@ -54,11 +54,9 @@ export class Signup {
   matchingPassword(): boolean {
     if(!this.noMismatch){
       this.message = "Les mots de passe doivent correspondre.";
-      console.log(this.message);
       return this.noMismatch;
     } else {
       this.message = "";
-      console.log(this.message);
       return this.noMismatch;
     }
   }

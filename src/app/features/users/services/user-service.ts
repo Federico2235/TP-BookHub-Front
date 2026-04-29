@@ -16,6 +16,12 @@ export class UserService {
   private readonly API_URL: string = 'http://localhost:8080/api/users';
   allUsers: WritableSignal<User[]> = signal<User[]>([]);
 
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    this.loggedUserSignal.set(null);
+  }
+
   getUsers() {
     const result = this.http.get<User[]>(this.API_URL);
     result.subscribe({

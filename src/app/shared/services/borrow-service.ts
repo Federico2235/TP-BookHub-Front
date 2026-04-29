@@ -41,7 +41,6 @@ export class BorrowService {
   }
 
   convertReservationToBorrow(borrowCreate: BorrowCreate) {
-    console.log('borrowCreate: ' + borrowCreate);
     return this.http.post<BorrowCreate>(this.API_URL, borrowCreate);
   }
 

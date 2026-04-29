@@ -29,6 +29,13 @@ export class AdminBoard {
     this.users().filter((u) => u.userId !== this.currentUser()?.userId),
   );
 
+  overdueLoans = computed(() =>
+    this.borrows().filter((borrow) => borrow.returnDate === null && this.isLate(borrow.borrowEnd)),
+  );
+  isLate(date: Date) {
+    return this.borrowService.isLate(date);
+  }
+
   constructor() {
     this.userService.getUsers();
     this.reservationService.updateReservations();

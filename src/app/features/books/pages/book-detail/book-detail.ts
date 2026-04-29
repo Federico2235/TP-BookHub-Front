@@ -56,8 +56,10 @@ export class BookDetail {
       next: (book) => {
         this.bookSignal.set(book);
 
-        if (book.status === AvailabilityStatus.BORROWED || book.reserved) {
+        if (book.status === AvailabilityStatus.BORROWED) {
           this.loadBookBorrow(book.id);
+        } else {
+          this.borrowSignal.set(undefined);
         }
       },
       error: (error) => console.error('Erreur chargement livre:', error),
