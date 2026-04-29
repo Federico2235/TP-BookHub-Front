@@ -35,9 +35,9 @@
         </ul>
         <div class="flex items-center gap-4">
           @if (loggedUser(); as user){
-            <a [routerLink]="['/profile', user.userId]" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-blue-900/30"
+            <a [routerLink]="['/profile', user.userId]" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
               class="relative group flex items-center gap-3 px-4 py-1 bg-surface-container-highest box-border rounded-full hover:bg-primary cursor-pointer
-              border-b border-b-3 border-b-blue-900/0"
+              border-b border-b-3 border-b-blue-900/0 transition-[border-color] duration-300 ease-in delay-200"
             >
 
               <span class="material-symbols-outlined text-primary group-hover:cursor-pointer group-hover:text-slate-100 transition-colors duration-300 ease-out" data-icon="account_circle">account_circle</span>
