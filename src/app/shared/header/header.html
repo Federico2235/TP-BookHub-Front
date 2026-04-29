@@ -28,21 +28,21 @@
               </a>
               <a routerLink="/librarian/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
                  class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3">
-                --D--
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M440-520v-280h440v280H440ZM80-160v-280h400v280H80Zm0-360v-280h280v280H80Zm440-80h280v-120H520v120ZM160-240h240v-120H160v120Zm0-360h120v-120H160v120Zm360 0ZM400-360ZM280-600ZM680-80l-12-60q-12-5-22.5-10.5T624-164l-58 18-40-68 46-40q-2-13-2-26t2-26l-46-40 40-68 58 18q11-8 21.5-13.5T668-420l12-60h80l12 60q12 5 22.5 10.5T816-396l58-18 40 68-46 40q2 13 2 26t-2 26l46 40-40 68-58-18q-11 8-21.5 13.5T772-140l-12 60h-80Zm96.5-143.5Q800-247 800-280t-23.5-56.5Q753-360 720-360t-56.5 23.5Q640-313 640-280t23.5 56.5Q687-200 720-200t56.5-23.5Z"/></svg>
               </a>
             </li>
           }
           @if (loggedUser() && isAdmin()){
             <li>
               <a routerLink="/admin/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-                 class="hidden md:inline-block relative inline-block leading-none text-blue-900 font-semibold py-3
+                 class="hidden md:flex relative  leading-none text-blue-900 font-semibold py-3
                   after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
                 Dashboard
               </a>
               <a routerLink="/admin/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-                 class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3
+                 class="flex md:hidden relative  leading-none text-blue-900 font-semibold py-3
                   after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
-                --D--
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M440-520v-280h440v280H440ZM80-160v-280h400v280H80Zm0-360v-280h280v280H80Zm440-80h280v-120H520v120ZM160-240h240v-120H160v120Zm0-360h120v-120H160v120Zm360 0ZM400-360ZM280-600ZM680-80l-12-60q-12-5-22.5-10.5T624-164l-58 18-40-68 46-40q-2-13-2-26t2-26l-46-40 40-68 58 18q11-8 21.5-13.5T668-420l12-60h80l12 60q12 5 22.5 10.5T816-396l58-18 40 68-46 40q2 13 2 26t-2 26l46 40-40 68-58-18q-11 8-21.5 13.5T772-140l-12 60h-80Zm96.5-143.5Q800-247 800-280t-23.5-56.5Q753-360 720-360t-56.5 23.5Q640-313 640-280t23.5 56.5Q687-200 720-200t56.5-23.5Z"/></svg>
               </a>
             </li>
           }
@@ -64,7 +64,7 @@
             >
 
               <span class="material-symbols-outlined text-primary group-hover:cursor-pointer group-hover:text-slate-100 transition-colors duration-300 ease-out" data-icon="account_circle">account_circle</span>
-              <span class="text-on-surface font-medium group-hover:text-slate-100">ii</span>
+
             </a>
             <!--logout-->
             <a (click)="logout()"
@@ -98,7 +98,7 @@
             <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
                class="hidden md:flex px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
               border-b border-b-3 border-b-blue-900/0">
-              Se déconnecter
+              Se connecter
             </a>
             <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
                class="flex md:hidden px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
