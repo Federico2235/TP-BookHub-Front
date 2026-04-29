@@ -17,7 +17,7 @@
       <div class="mb-10">
         <h2 class="text-3xl font-bold text-on-surface mb-2 tracking-tight">Créez votre compte</h2>
       </div>
-      <form #signupForm="ngForm" class="space-y-6">
+      <form #signupForm="ngForm" class="space-y-6" (ngSubmit)="handleSignup()">
         <!-- First Name -->
         <div class="space-y-2">
           <label class="block text-sm font-semibold text-on-surface-variant px-1" for="full_name">Prénom</label>
@@ -101,7 +101,7 @@
         <!-- Primary CTA -->
 
         @if (signupForm.invalid || !matchingPassword()) {
-          <button disabled (click)="handleSignup()" class="w-full bg-gray-100 from-primary to-primary-container text-gray-300 shadow-xl py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
+          <button disabled class="w-full bg-gray-100 from-primary to-primary-container text-gray-300 shadow-xl py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/10 hover:opacity-95 transition-all active:scale-[0.98] mt-4" type="submit">
             Enregistrer
           </button>
         } @else {
