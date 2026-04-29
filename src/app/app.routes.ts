@@ -34,10 +34,5 @@ export const routes: Routes = [
     path: 'librarian/board',
     component: LibrarianBoard,
     canActivate: [authGuardGuard, LibrarianGuard]
-  },
-  {
-    path: 'testsarah',
-    component: Home,
-    canActivate: [authGuardGuard]
   }
 ];

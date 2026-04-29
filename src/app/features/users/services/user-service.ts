@@ -1,9 +1,10 @@
-import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
-import { Observable } from 'rxjs';
+import {inject, Injectable, signal} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../models/user.model';
+import {Observable} from 'rxjs';
 import {SignupRequest} from '../models/signupRequest.model';
 import {SignupResponse} from '../models/signupResponse.model';
+import {Role} from '../../books/models/role.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,6 @@ export class UserService {
   }
   isUserLibrarian(){
     console.log(this.loggedUserSignal()?.role); // -> donne un undefined
-    return false;
+    return this.loggedUserSignal()?.role == Role.LIBRARIAN ;
   }
 }
