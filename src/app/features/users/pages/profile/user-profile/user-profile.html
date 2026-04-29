@@ -47,11 +47,11 @@
     <div class="bg-secondary-container rounded-[2rem] p-8 border border-outline-variant/15">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-bold tracking-tight">Emprunts</h3>
-        <span class="text-sm font-medium text-on-surface-variant">{{userBorrows()?.length??0}} documents actifs</span>
+        <span class="text-sm font-medium text-on-surface-variant">{{userBorrows().length}} documents actifs</span>
       </div>
       <div class="space-y-4 bg-surface-bright rounded-3xl max-h-125 overflow-y-auto p-5">
         @if (userBorrows() != undefined){
-          @if (userBorrows()?.length!=0) {
+          @if (userBorrows().length!=0) {
             @for (borrow of userBorrows(); track borrow.borrowId) {
               <div class="flex items-center gap-4 p-5 bg-surface-container-low rounded-2xl border border-surface-dim">
                 <button (click)="navigateToDetail(borrow.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
@@ -98,7 +98,7 @@
       <h3 class="text-2xl font-bold tracking-tight mb-6">Mes Réservations</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @if (userReservations() !== undefined) {
-          @if (userReservations()?.length != 0) {
+          @if (userReservations().length != 0) {
             @for (reservation of userReservations(); track reservation.id) {
               <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
                 <div class="flex items-start justify-between mb-4">
