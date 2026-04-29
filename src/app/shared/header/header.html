@@ -14,10 +14,9 @@
               Catalogue
             </a>
             <a routerLink="" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-               class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3
-                after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full"
+               class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3"
             >
-              --C--
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M80-160v-80h800v80H80Zm80-160v-320h80v320h-80Zm160 0v-480h80v480h-80Zm160 0v-480h80v480h-80Zm280 0L600-600l70-40 160 280-70 40Z"/></svg>
             </a>
           </li>
           @if (loggedUser() && (isLibrarian())){
@@ -28,8 +27,7 @@
                 Dashboard
               </a>
               <a routerLink="/librarian/board" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="after:w-full"
-                 class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3
-                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary after:origin-left after:transition-all after:duration-300 hover:after:w-full">
+                 class="block md:hidden relative inline-block leading-none text-blue-900 font-semibold py-3">
                 --D--
               </a>
             </li>
@@ -50,10 +48,8 @@
           }
         </ul>
         <div class="flex items-center gap-4">
-
-
-
           @if (loggedUser(); as user){
+            <!--user profile-->
             <a [routerLink]="['/profile', user.userId]" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
               class="hidden md:flex relative group items-center gap-3 px-4 py-2 bg-surface-container-highest box-border rounded-full hover:bg-primary cursor-pointer
               border-b border-b-3 border-b-blue-900/0 transition-[border-color] duration-300 ease-in delay-200"
@@ -64,26 +60,50 @@
             </a>
             <a [routerLink]="['/profile', user.userId]" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
                class="flex md:hidden relative group items-center gap-3 px-4 py-2 bg-surface-container-highest box-border rounded-full hover:bg-primary cursor-pointer
-              border-b border-b-3 border-b-blue-900/0 transition-[border-color] duration-300 ease-in delay-200"
+              border-b-3 border-b-blue-900/0 transition-[border-color] duration-300 ease-in delay-200"
             >
 
               <span class="material-symbols-outlined text-primary group-hover:cursor-pointer group-hover:text-slate-100 transition-colors duration-300 ease-out" data-icon="account_circle">account_circle</span>
               <span class="text-on-surface font-medium group-hover:text-slate-100">ii</span>
             </a>
-            <a (click)="logout()" class=" group flex items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer hover:text-slate-100 hover:bg-primary
-              border-b border-b-3 border-b-blue-900/0"
+            <!--logout-->
+            <a (click)="logout()"
+               class="hidden md:flex group items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer hover:text-slate-100 hover:bg-primary
+              border-b-3 border-b-blue-900/0"
             >
               <span class="text-on-surface font-medium group-hover:text-slate-100 transition-colors duration-300 ease-out">Se déconnecter</span>
             </a>
+            <a (click)="logout()"
+               class="flex md:hidden group items-center gap-3 px-4 py-2 bg-surface-container-highest rounded-full hover:cursor-pointer hover:text-slate-100 hover:bg-primary
+              border-b-3 border-b-blue-900/0"
+            >
+              <span class="text-on-surface font-medium group-hover:text-slate-100 transition-colors duration-300 ease-out">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
+              </span>
+            </a>
           }
           @if (!loggedUser()){
-            <a routerLink="/login" [routerLink]="['/signup']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30" class="px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
-              border-b border-b-3 border-b-blue-900/0">
+            <!-- create account -->
+            <a routerLink="/login" [routerLink]="['/signup']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
+               class="hidden md:flex px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+              border-b-3 border-b-blue-900/0">
               Créer un compte
             </a>
-            <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30" class="px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+            <a routerLink="/login" [routerLink]="['/signup']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
+               class="flex md:hidden px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
               border-b border-b-3 border-b-blue-900/0">
-              Se connecter
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M183.5-183.5Q160-207 160-240t23.5-56.5Q207-320 240-320t56.5 23.5Q320-273 320-240t-23.5 56.5Q273-160 240-160t-56.5-23.5Zm0-240Q160-447 160-480t23.5-56.5Q207-560 240-560t56.5 23.5Q320-513 320-480t-23.5 56.5Q273-400 240-400t-56.5-23.5Zm0-240Q160-687 160-720t23.5-56.5Q207-800 240-800t56.5 23.5Q320-753 320-720t-23.5 56.5Q273-640 240-640t-56.5-23.5Zm240 0Q400-687 400-720t23.5-56.5Q447-800 480-800t56.5 23.5Q560-753 560-720t-23.5 56.5Q513-640 480-640t-56.5-23.5Zm240 0Q640-687 640-720t23.5-56.5Q687-800 720-800t56.5 23.5Q800-753 800-720t-23.5 56.5Q753-640 720-640t-56.5-23.5Zm-240 240Q400-447 400-480t23.5-56.5Q447-560 480-560t56.5 23.5Q560-513 560-480t-23.5 56.5Q513-400 480-400t-56.5-23.5ZM520-160v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+            </a>
+            <!-- login -->
+            <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
+               class="hidden md:flex px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+              border-b border-b-3 border-b-blue-900/0">
+              Se déconnecter
+            </a>
+            <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30"
+               class="flex md:hidden px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+              border-b border-b-3 border-b-blue-900/0">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#003f89"><path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/></svg>
             </a>
           }
         </div>
