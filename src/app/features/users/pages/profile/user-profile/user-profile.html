@@ -50,38 +50,40 @@
         <span class="text-sm font-medium text-on-surface-variant">{{userBorrows()?.length??0}} documents actifs</span>
       </div>
       <div class="space-y-4">
-        @if (userBorrows() !== undefined) {
-          @for (borrow of userBorrows(); track borrow.borrowId) {
-            <div class="flex items-center gap-4 p-5 border border-surface-container rounded-2xl">
-              <button (click)="navigateToDetail(borrow.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
-                <img alt="Book cover" class="w-full h-full object-cover"
-                     src="{{borrow.book.imgUrl}}"/>
-              </button>
-              <div class="flex-grow">
-                <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
-                <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
-              </div>
-              <div class="flex flex-col items-end">
-                <!-- Ajout d'un if pour le cas ou le livre est retourné-->
-                @if (borrow.returnDate == null){
-                  <span
-                    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
-                    [ngClass]="isLate(borrow.borrowEnd) ? 'bg-error text-on-error' : 'bg-green-100 text-green-800'">
+        @if (userBorrows() != undefined){
+          @if (userBorrows()?.length!=0) {
+            @for (borrow of userBorrows(); track borrow.borrowId) {
+              <div class="flex items-center gap-4 p-5 border border-surface-container rounded-2xl">
+                <button (click)="navigateToDetail(borrow.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
+                  <img alt="Book cover" class="w-full h-full object-cover"
+                       src="{{borrow.book.imgUrl}}"/>
+                </button>
+                <div class="flex-grow">
+                  <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
+                  <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
+                </div>
+                <div class="flex flex-col items-end">
+                  <!-- Ajout d'un if pour le cas ou le livre est retourné-->
+                  @if (borrow.returnDate == null){
+                    <span
+                      class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider"
+                      [ngClass]="isLate(borrow.borrowEnd) ? 'bg-error text-on-error' : 'bg-green-100 text-green-800'">
 
-                    {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
-                  </span>
-                }
-                @if(borrow.returnDate !== null) {
-                  <span
-                    class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider bg-blue-100 text-blue-800">
-                    <p>Rendu</p>
-                  </span>
-                }
+                      {{ isLate(borrow.borrowEnd) ? 'retard' : 'à l\'heure' }}
+                    </span>
+                  }
+                  @if(borrow.returnDate !== null) {
+                    <span
+                      class="px-3 py-1 text-[11px] font-bold uppercase rounded-full tracking-wider bg-blue-100 text-blue-800">
+                      <p>Rendu</p>
+                    </span>
+                  }
+                </div>
               </div>
-            </div>
+            }
+          } @else {
+            <p class="text-primary font-bold">Vous n'avez pas encore d'emprunts</p>
           }
-        } @else {
-          <p class="text-primary font-bold">Vous n'avez pas encore d'emprunts</p>
         }
       </div>
     </div>
@@ -89,40 +91,39 @@
     <div class="bg-surface-container-low rounded-[2rem] p-8">
       <h3 class="text-2xl font-bold tracking-tight mb-6">Mes Réservations</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
         @if (userReservations() !== undefined) {
-
-          @for (reservation of userReservations(); track reservation.id) {
-
-            <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
-              <div class="flex items-start justify-between mb-4">
-                <div
-                  class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
-                  <span class="material-symbols-outlined">menu_book</span>
+          @if (userReservations()?.length != 0) {
+            @for (reservation of userReservations(); track reservation.id) {
+              <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
+                <div class="flex items-start justify-between mb-4">
+                  <div
+                    class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+                    <span class="material-symbols-outlined">menu_book</span>
+                  </div>
+                  @if (reservation.book.status !== AvailabilityStatus.AVAILABLE) {
+                    <span class="text-[11px] font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
+                  } @else {
+                    <span class="text-[11px] font-bold uppercase bg-green-100 text-green-800 px-3 py-1 rounded-full">Disponible</span>
+                  }
                 </div>
-                @if (reservation.book.status !== AvailabilityStatus.AVAILABLE) {
-                  <span class="text-[11px] font-bold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full">En attente</span>
-                } @else {
-                  <span class="text-[11px] font-bold uppercase bg-green-100 text-green-800 px-3 py-1 rounded-full">Disponible</span>
-                }
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="flex flex-col justify-baseline">
-                  <h4 class="font-bold text-lg mb-1">{{ reservation.book.title }}</h4>
-                  <p class="text-sm text-on-surface-variant mb-4">{{ reservation.book.author }}</p>
+                <div class="flex justify-between items-center">
+                  <div class="flex flex-col justify-baseline">
+                    <h4 class="font-bold text-lg mb-1">{{ reservation.book.title }}</h4>
+                    <p class="text-sm text-on-surface-variant mb-4">{{ reservation.book.author }}</p>
+                  </div>
+                  <button (click)="navigateToDetail(reservation.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
+                    <img alt="Book cover" class="w-full h-full object-cover" src="{{reservation.book.imgUrl}}" />
+                  </button>
                 </div>
-                <button (click)="navigateToDetail(reservation.book.id)" class="w-12 h-16 bg-slate-300 rounded-lg overflow-hidden shadow-sm flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(.22,.61,.36,1)] hover:scale-110 hover:shadow-xl">
-                  <img alt="Book cover" class="w-full h-full object-cover" src="{{reservation.book.imgUrl}}" />
-                </button>
+                <div class="pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined text-sm">event</span>
+                  <span class="text-xs font-bold">Réservé depuis le {{ reservation.date | date : 'EEEE d MMMM y' }}</span>
+                </div>
               </div>
-              <div class="pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined text-sm">event</span>
-                <span class="text-xs font-bold">Réservé depuis le {{ reservation.date | date : 'EEEE d MMMM y' }}</span>
-              </div>
-            </div>
+            }
+          } @else {
+            <p class="text-primary font-bold">Vous n'avez pas encore de réservations</p>
           }
-        } @else {
-          <p class="text-primary font-bold">Vous n'avez pas encore de réservations</p>
         }
       </div>
     </div>
