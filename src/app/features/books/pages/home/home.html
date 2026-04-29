@@ -56,10 +56,10 @@
       <h2 class="text-3xl font-bold text-primary">Nos livres</h2>
       <span class="text-on-surface-variant font-medium">{{books.length}} livres trouvés</span>
     </div>
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 ml:grid-cols-5 xl:grid-cols-6 gap-8">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 ml:grid-cols-4 xl:grid-cols-5 gap-8">
       <!-- ################# Book Card loop #######################-->
       @for (book of books; track $index){
-        <a routerLink="/detail/{{book.id}}" class="group bg-surface-container-low rounded-[2rem] p-6 transition-all ">
+        <a routerLink="/detail/{{book.id}}" class="flex flex-col justify-between group bg-surface-container-low rounded-[2rem] p-6 transition-all ">
           <div class="relative mb-6 aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
             <img alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="{{book.imgUrl}}"/>
             <div class="absolute top-4 right-4 px-3 py-1 bg-surface-container-lowest/90 backdrop-blur rounded-full text-xs font-bold text-primary">
