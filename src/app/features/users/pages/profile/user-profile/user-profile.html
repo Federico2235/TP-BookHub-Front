@@ -125,6 +125,11 @@
                   <span class="material-symbols-outlined text-sm">event</span>
                   <span class="text-xs font-bold">Réservé depuis le {{ reservation.date | date : 'EEEE d MMMM y' }}</span>
                 </div>
+                <div class="flex justify-center mt-5">
+                  <button (click)="cancelReservation(reservation.id)" class="px-4 py-2 bg-primary text-on-primary rounded-lg text-xs font-bold shadow-md opacity-20 hover:opacity-100 transition-opacity hover:cursor-pointer">
+                    Annuler
+                  </button>
+                </div>
               </div>
             }
           } @else {

@@ -29,4 +29,8 @@ export class ReservationService {
   reserveABook(reservation : ReservationRequest):Observable<Reservation>{
     return this.http.post<Reservation>(this.API_URL,reservation)
   }
+
+  deleteReservation(id: number) {
+    return this.http.delete(this.API_URL+'/'+id)
+  }
 }
