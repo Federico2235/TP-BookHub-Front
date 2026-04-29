@@ -12,98 +12,82 @@
   <div class="bg-surface-container-low p-8 rounded-[2rem] space-y-6">
     <div class="relative group">
       <span class="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
-      <input class="w-full pl-16 pr-6 py-5 bg-surface-container-lowest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher un livre, un auteur ou un ISBN..." type="text"/>
+      <input [formField]="searchBarForm" class="w-full pl-16 pr-6 py-5 bg-surface-container-lowest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher un livre" type="text"/>
     </div>
-    <div class="flex flex-wrap gap-4">
-      <div class="flex-1 min-w-[200px] relative">
-        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
-          <option>Toutes les Catégories</option>
-          <option>Littérature</option>
-          <option>Sciences</option>
-          <option>Histoire</option>
-          <option>Art &amp; Design</option>
-        </select>
-        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+    <div class="flex justify-center flex-wrap gap-4">
+      <div class="flex items-center justify-center gap-3 group cursor-pointer">
+        <div class="relative flex items-center">
+          <input [formField]="availabilityForm" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-outline bg-surface-container-lowest checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 transition-all duration-200" id="available-only" type="checkbox"/>
+          <span class="material-symbols-outlined absolute text-on-primary text-sm opacity-0 peer-checked:opacity-100 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold select-none">check</span>
+        </div>
+        <label class="text-on-surface-variant font-body text-base cursor-pointer select-none hover:text-on-surface transition-colors" for="available-only">
+          Afficher uniquement les livres réservables
+        </label>
       </div>
-      <div class="flex-1 min-w-[200px] relative">
-        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
-          <option>Disponibilité</option>
-          <option>Disponible</option>
-          <option>Emprunté</option>
-        </select>
-        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
-      </div>
-      <div class="flex-1 min-w-[200px] relative">
-        <select class="w-full appearance-none bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-on-surface-variant focus:ring-2 focus:ring-primary/10">
-          <option>Auteur</option>
-          <option>Victor Hugo</option>
-          <option>Simone de Beauvoir</option>
-          <option>Albert Camus</option>
-        </select>
-        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
-      </div>
-      <button class="px-8 py-3 tonal-gradient text-on-primary rounded-xl font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
-        <span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
-        Filtrer
-      </button>
     </div>
   </div>
+
 </section>
 <!-- Book Catalog Grid -->
-@if( _books | async; as books) {
-  <section>
-    <div class="flex justify-between items-end mb-10">
-      <h2 class="text-3xl font-bold text-primary">Nos livres</h2>
-      <span class="text-on-surface-variant font-medium">{{books.length}} livres trouvés</span>
+@if( filteredBooks() ; as books) {
+  @if (filteredBooks().length === 0) {
+    <div class="flex justify-center">
+      <app-no-result-found/>
     </div>
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 ml:grid-cols-4 xl:grid-cols-5 gap-8">
-      <!-- ################# Book Card loop #######################-->
-      @for (book of books; track $index){
-        <a routerLink="/detail/{{book.id}}" class="flex flex-col justify-between group bg-surface-container-low rounded-[2rem] p-6 transition-all ">
-          <div class="relative mb-6 aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
-            <img alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="{{book.imgUrl}}"/>
-            <div class="absolute top-4 right-4 px-3 py-1 bg-surface-container-lowest/90 backdrop-blur rounded-full text-xs font-bold text-primary">
-              Nouveauté
+  } @else {
+    <section>
+      <div class="flex justify-between items-end mb-10">
+        <h2 class="text-3xl font-bold text-primary">Nos livres</h2>
+        <span class="text-on-surface-variant font-medium">{{books.length}} livres trouvés</span>
+      </div>
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 ml:grid-cols-4 xl:grid-cols-5 gap-8">
+        <!-- ################# Book Card loop #######################-->
+        @for (book of books; track $index){
+          <a routerLink="/detail/{{book.id}}" class="flex flex-col justify-between group bg-surface-container-low rounded-[2rem] p-6 transition-all ">
+            <div class="relative mb-6 aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
+              <img alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="{{book.imgUrl}}"/>
+              <div class="absolute top-4 right-4 px-3 py-1 bg-surface-container-lowest/90 backdrop-blur rounded-full text-xs font-bold text-primary">
+                Nouveauté
+              </div>
             </div>
-          </div>
-          <div class="space-y-2 mb-6 text-tertiary-container">
-            <h3 class="text-xl font-bold text-on-surface leading-tight">{{book.title}}</h3>
-            <p class="text-on-surface-variant font-medium">{{book.author}}</p>
-            @if (book.status === AvailabilityStatus.AVAILABLE && !book.reserved) {
-              <div class="flex items-center gap-2 pt-2">
-                <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                <span class="text-sm font-semibold text-green-700">Disponible</span>
-              </div>
-            } @else if (book.reserved) {
-              <div class="flex items-center gap-2 pt-2">
-                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                <span class="text-sm font-semibold text-blue-700">Réservé</span>
-              </div>
-            } @else if (book.status === AvailabilityStatus.BORROWED) {
-              <div class="flex items-center gap-2 pt-2">
-                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-                <span class="text-sm font-semibold text-orange-700">Emprunté</span>
-              </div>
-            } @else if (book.status === AvailabilityStatus.BLOCKED) {
-              <div class="flex items-center gap-2 pt-2">
-                <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                <span class="text-sm font-semibold text-red-700">Indisponible</span>
-              </div>
-            }
-          </div>
-          <div class="group relative w-full py-3 bg-surface-container-lowest text-primary font-bold flex justify-center rounded-xl border-2 border-outline-variant/15 cursor-pointer">
-            <p class="relative inline-block
+            <div class="space-y-2 mb-6 text-tertiary-container">
+              <h3 class="text-xl font-bold text-on-surface leading-tight">{{book.title}}</h3>
+              <p class="text-on-surface-variant font-medium">{{book.author}}</p>
+              @if (book.status === AvailabilityStatus.AVAILABLE && !book.reserved) {
+                <div class="flex items-center gap-2 pt-2">
+                  <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                  <span class="text-sm font-semibold text-green-700">Disponible</span>
+                </div>
+              } @else if (book.reserved) {
+                <div class="flex items-center gap-2 pt-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                  <span class="text-sm font-semibold text-blue-700">Réservé</span>
+                </div>
+              } @else if (book.status === AvailabilityStatus.BORROWED) {
+                <div class="flex items-center gap-2 pt-2">
+                  <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                  <span class="text-sm font-semibold text-orange-700">Emprunté</span>
+                </div>
+              } @else if (book.status === AvailabilityStatus.BLOCKED) {
+                <div class="flex items-center gap-2 pt-2">
+                  <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                  <span class="text-sm font-semibold text-red-700">Indisponible</span>
+                </div>
+              }
+            </div>
+            <div class="group relative w-full py-3 bg-surface-container-lowest text-primary font-bold flex justify-center rounded-xl border-2 border-outline-variant/15 cursor-pointer">
+              <p class="relative inline-block
             after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 after:bg-primary
             after:transition-all after:duration-300
             group-hover:after:left-0 group-hover:after:w-full">
-              Voir détails
-            </p>
-          </div>
-
-        </a>
-      }
-    </div>
-  </section>
+                Voir détails
+              </p>
+            </div>
+          </a>
+        }
+      </div>
+    </section>
+  }
 }
 
 
