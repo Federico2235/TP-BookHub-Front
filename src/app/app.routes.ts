@@ -9,6 +9,7 @@ import { LibrarianBoard } from './features/users/pages/librarian-board/librarian
 import { profileOwnerGuard } from './shared/guard/profile-owner-guard';
 import { librarianGuard } from './shared/guard/librarian-guard';
 import { AdminBoard } from './features/users/pages/admin-board/admin-board';
+import { adminGuard } from './shared/guard/admin-guard';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,6 @@ export const routes: Routes = [
   {
     path: 'admin/board',
     component: AdminBoard,
-    canActivate: [authGuardGuard],
+    canActivate: [authGuardGuard,adminGuard],
   },
 ];
