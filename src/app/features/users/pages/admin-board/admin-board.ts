@@ -3,15 +3,24 @@ import { UserService } from '../../services/user-service';
 import { User } from '../../models/user.model';
 import { Role } from '../../../books/models/role.model';
 import { FormsModule } from '@angular/forms';
+import { ReservationService } from '../../../../shared/services/reservation-service';
+import { BooksService } from '../../../books/services/books-service';
+import { BorrowService } from '../../../../shared/services/borrow-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-board',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './admin-board.html',
   styleUrl: './admin-board.css',
 })
 export class AdminBoard {
   private readonly userService = inject(UserService);
+  private reservationService: ReservationService = inject(ReservationService);
+  private borrowService: BorrowService = inject(BorrowService);
+  reservations = this.reservationService.allReservations.asReadonly();
+  borrows = this.borrowService.allBorrows.asReadonly();
+
   protected roles: Role[] = [Role.MEMBER, Role.LIBRARIAN, Role.ADMIN];
   protected users = this.userService.allUsers;
   protected currentUser = this.userService.loggedUserSignal;
@@ -22,6 +31,8 @@ export class AdminBoard {
 
   constructor() {
     this.userService.getUsers();
+    this.reservationService.updateReservations();
+    this.borrowService.updateBorrows();
   }
 
   changeRole(user: User, newRole: Role): void {
