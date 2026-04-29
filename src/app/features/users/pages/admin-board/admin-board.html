@@ -1,0 +1,177 @@
+<!-- Content Canvas -->
+<div class="pt-28 p-10 space-y-10">
+  <!-- Section 1: Statistiques globales -->
+  <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-none flex flex-col justify-between h-40">
+      <div class="flex justify-between items-start">
+        <span class="p-2 bg-blue-50 text-blue-700 rounded-lg material-symbols-outlined">groups</span>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-on-surface-variant">Nombre total de membres actifs</p>
+        <h3 class="text-3xl font-black text-on-surface">{{ users().length }}</h3>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+    <!-- Section 2: Gestion des utilisateurs -->
+    <div class="lg:col-span-2 space-y-6">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight">Gestion des utilisateurs</h2>
+          <p class="text-on-surface-variant text-sm">
+            Surveillez et modérez l'accès des membres à la plateforme.
+          </p>
+        </div>
+
+        <button
+          class="text-primary font-bold text-sm flex items-center gap-1 hover:bg-primary/5 px-4 py-2 rounded-lg transition-colors">
+          Voir tous les membres
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border-none">
+        <table class="w-full text-left border-collapse table-fixed">
+
+          <thead>
+          <tr class="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-widest font-bold">
+            <th class="px-6 py-4 w-1/2">Nom</th>
+            <th class="px-6 py-4 w-1/4">Rôle</th>
+            <th class="px-6 py-4 w-1/4 text-right">Actions</th>
+          </tr>
+          </thead>
+
+          <tbody class="divide-y divide-slate-100">
+            @for (user of filteredUsers(); track user.userId) {
+              <tr class="hover:bg-slate-50 transition-colors">
+
+                <!-- NOM -->
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-xs">
+                      {{ user.firstName[0] }}{{ user.lastName[0] }}
+                    </div>
+
+                    <div>
+                      <p class="font-bold text-sm">
+                        {{ user.firstName }} {{ user.lastName }}
+                      </p>
+                      <p class="text-xs text-slate-500">
+                        {{ user.email }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- ROLE -->
+                <td class="px-6 py-4">
+                  <select
+                    class="w-full px-3 py-2 text-sm font-medium rounded-lg
+                  border border-slate-200 bg-white
+                  shadow-sm
+                  focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
+                  hover:border-primary transition-all duration-200
+                  cursor-pointer"
+                    [ngModel]="user.role"
+                    (ngModelChange)="changeRole(user, $event)"
+                  >
+                    @for (role of roles; track role) {
+                      <option [ngValue]="role">
+                        {{ role }}
+                      </option>
+                    }
+                  </select>
+
+                  @if (successMessage()) {
+                    <div class="fixed top-6 right-6 z-50 px-4 py-3 rounded-lg bg-green-600 text-white shadow-lg">
+                      {{ successMessage() }}
+                    </div>
+                  }
+                </td>
+
+                <!-- ACTIONS -->
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-2">
+                    <button class="p-2 text-slate-400 hover:text-primary transition-colors">
+                      <span class="material-symbols-outlined text-xl">edit</span>
+                    </button>
+
+                    <button class="p-2 text-slate-400 hover:text-error transition-colors">
+                      <span class="material-symbols-outlined text-xl">block</span>
+                    </button>
+                  </div>
+                </td>
+
+              </tr>
+            }
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-10">
+
+      <!-- Actions rapides -->
+      <div class="space-y-6">
+        <h4 class="font-bold tracking-tight flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">bolt</span>
+          Actions rapides
+        </h4>
+
+        <div class="grid grid-cols-1 gap-4">
+
+          <div class="p-5 bg-surface-container-low rounded-xl border-l-4 border-primary group hover:bg-surface-container-highest transition-all cursor-pointer">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-2xl font-black">24</p>
+                <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">
+                  Réservations en attente
+                </p>
+              </div>
+              <span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors">
+                chevron_right
+              </span>
+            </div>
+          </div>
+
+          <div class="p-5 bg-surface-container-low rounded-xl border-l-4 border-tertiary group hover:bg-surface-container-highest transition-all cursor-pointer">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-2xl font-black">12</p>
+                <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">
+                  Emprunts en retard
+                </p>
+              </div>
+              <span class="material-symbols-outlined text-slate-300 group-hover:text-tertiary transition-colors">
+                chevron_right
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Statut -->
+      <div class="rounded-xl overflow-hidden relative h-48 flex items-end p-6">
+        <img
+          alt="Bibliothèque"
+          class="absolute inset-0 w-full h-full object-cover brightness-50"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzxgTqDIGlWFzREc_pXgLJxo5QAZ6JvZ7tH9sntCYTiAKnSAKEPN0vkZbeLjteyVfcNa-IVxCalZ2RmJHVoP03wdBL7UkmjDkuXSYD_8mCEu9yb8sXsOsHCfe_A7REbeQPjNhVFuDZYwiHKlT_N02oA3LURmjQfDIIGNXD0_9B4hs6usKicAlA3EVbDHMgI3JrqKvBlP11yHhzf73U0Pg4r7-F84BMDrQM8LZh7HSPphNq3xjWnvwMdrSGUtgYKICZyyzqHOPCROrM"
+        />
+        <div class="relative z-10 text-white">
+          <p class="text-xs uppercase tracking-[0.2em] font-bold opacity-80">
+            Statut de la bibliothèque
+          </p>
+          <h5 class="text-xl font-bold leading-tight">
+            Système opérationnel : tous les services sont en ligne
+          </h5>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

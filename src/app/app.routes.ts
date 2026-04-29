@@ -8,32 +8,38 @@ import {Signup} from './features/users/pages/signup/signup/signup';
 import { LibrarianBoard } from './features/users/pages/librarian-board/librarian-board';
 import { profileOwnerGuard } from './shared/guard/profile-owner-guard';
 import { librarianGuard } from './shared/guard/librarian-guard';
+import { AdminBoard } from './features/users/pages/admin-board/admin-board';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home
+    component: Home,
   },
   {
     path: 'detail/:id',
-    component: BookDetail
+    component: BookDetail,
   },
   {
     path: 'login',
-    component: Login
+    component: Login,
   },
   {
     path: 'profile/:id',
     component: UserProfile,
-    canActivate: [authGuardGuard,profileOwnerGuard]
+    canActivate: [authGuardGuard, profileOwnerGuard],
   },
   {
     path: 'signup',
-    component: Signup
+    component: Signup,
   },
   {
     path: 'librarian/board',
     component: LibrarianBoard,
     canActivate: [authGuardGuard, librarianGuard],
-  }
+  },
+  {
+    path: 'admin/board',
+    component: AdminBoard,
+    canActivate: [authGuardGuard],
+  },
 ];
