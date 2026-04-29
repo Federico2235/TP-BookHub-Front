@@ -6,6 +6,8 @@ import { UserProfile } from './features/users/pages/profile/user-profile/user-pr
 import { authGuardGuard } from './shared/guard/auth-guard-guard';
 import {Signup} from './features/users/pages/signup/signup/signup';
 import { LibrarianBoard } from './features/users/pages/librarian-board/librarian-board';
+import { profileOwnerGuard } from './shared/guard/profile-owner-guard';
+import { librarianGuard } from './shared/guard/librarian-guard';
 
 export const routes: Routes = [
   {
@@ -23,7 +25,7 @@ export const routes: Routes = [
   {
     path: 'profile/:id',
     component: UserProfile,
-    canActivate: [authGuardGuard]
+    canActivate: [authGuardGuard,profileOwnerGuard]
   },
   {
     path: 'signup',
@@ -31,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'librarian/board',
-    component: LibrarianBoard
+    component: LibrarianBoard,
+    canActivate: [authGuardGuard, librarianGuard],
   }
 ];
