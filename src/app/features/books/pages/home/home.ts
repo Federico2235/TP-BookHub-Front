@@ -14,17 +14,26 @@ import { NoResultFound } from '../no-result-found/no-result-found';
 })
 export class Home {
   private bookService = inject(BooksService);
-  constructor() {
-    console.log('Home created');
-  }
   books = this.bookService.allBooks;
-  _books = this.bookService.getBooks();
   searchBarInput = signal<string>('');
+  availabilityCheckBox = signal<boolean>(false);
+  availabilityForm = form<boolean>(this.availabilityCheckBox);
   searchBarForm = form(this.searchBarInput);
-  filteredBooks = computed(() =>
-    this.books().filter((book) =>
-      book.title.toLowerCase().includes(this.searchBarForm().value().toLowerCase()),
-    ),
-  );
+  availableFilteredBooks = computed(() => this.books().filter((book) => !book.reserved));
+  filteredBooks = computed(() => {
+    if (this.availabilityForm().value()) {
+      return this.availableFilteredBooks().filter((book) =>
+        book.title.toLowerCase().includes(this.searchBarForm().value().toLowerCase()),
+      );
+    } else {
+      return this.books().filter((book) =>
+        book.title.toLowerCase().includes(this.searchBarForm().value().toLowerCase()),
+      );
+    }
+  });
   protected readonly AvailabilityStatus = AvailabilityStatus;
+
+  constructor() {
+    this.bookService.updateBooks()
+  }
 }

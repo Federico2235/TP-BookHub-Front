@@ -14,7 +14,19 @@
       <span class="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
       <input [formField]="searchBarForm" class="w-full pl-16 pr-6 py-5 bg-surface-container-lowest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher un livre" type="text"/>
     </div>
+    <div class="flex justify-center flex-wrap gap-4">
+      <div class="flex items-center justify-center gap-3 group cursor-pointer">
+        <div class="relative flex items-center">
+          <input [formField]="availabilityForm" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-outline bg-surface-container-lowest checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 transition-all duration-200" id="available-only" type="checkbox"/>
+          <span class="material-symbols-outlined absolute text-on-primary text-sm opacity-0 peer-checked:opacity-100 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-bold select-none">check</span>
+        </div>
+        <label class="text-on-surface-variant font-body text-base cursor-pointer select-none hover:text-on-surface transition-colors" for="available-only">
+          Afficher uniquement les livres réservables
+        </label>
+      </div>
+    </div>
   </div>
+
 </section>
 <!-- Book Catalog Grid -->
 @if( filteredBooks() ; as books) {
