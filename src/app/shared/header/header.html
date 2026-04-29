@@ -50,10 +50,12 @@
             </a>
           }
           @if (!loggedUser()){
-            <a routerLink="/signup" class="px-6 py- rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer">
+            <a routerLink="/login" [routerLink]="['/signup']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30" class="px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+              border-b border-b-3 border-b-blue-900/0">
               Créer un compte
             </a>
-            <a routerLink="/login" class="px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer">
+            <a routerLink="/login" [routerLink]="['/login']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="border-b-ease-in border-b-blue-900/30" class="px-6 py-2 rounded-full text-primary font-semibold bg-slate-100 hover:bg-primary hover:text-slate-100 transition-colors duration-300 ease-out cursor-pointer
+              border-b border-b-3 border-b-blue-900/0">
               Se connecter
             </a>
           }
