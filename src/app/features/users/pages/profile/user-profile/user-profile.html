@@ -60,7 +60,13 @@
                 </button>
                 <div class="flex-grow">
                   <p class="text-base font-bold truncate text-on-surface">{{borrow.book.title}}</p>
-                  <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
+                  <p>{{borrow.returnDate != undefined}}</p>
+                  @if (borrow.returnDate == undefined) {
+                    <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Retour prévu : {{borrow.borrowEnd | date : 'EEEE d MMMM y'}}</p>
+                  } @else {
+                    <p class="text-sm text-on-surface-variant">{{borrow.book.author}} • Livre rendu : {{borrow.returnDate | date : 'EEEE d MMMM y'}}</p>
+                  }
+
                 </div>
                 <div class="flex flex-col items-end">
                   <!-- Ajout d'un if pour le cas ou le livre est retourné-->
