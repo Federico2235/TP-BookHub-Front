@@ -15,6 +15,7 @@ export class BooksService {
   getBooks(): Observable<Book[]> {
     const result = this.http.get<Book[]>(this.apiUrl);
     result.subscribe({next: (books) => this.allBooks.set(books)})
+    console.log(result.subscribe())
     return result ;
   }
 
