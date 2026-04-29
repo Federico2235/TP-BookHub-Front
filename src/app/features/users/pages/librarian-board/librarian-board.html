@@ -55,10 +55,13 @@
 <!-- Reservations & Loans Grid -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-5">
   <!-- Reservations Management -->
-  <section class="space-y-6 ">
+  <section class="space-y-6 border border-surface-container-highest p-3 rounded-3xl">
+    <div class="flex justify-between">
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">Réservations</h2>
+      <input [formField]="searchReservationForm" class="w-1/2 h-3.5 pl-16 pr-6 py-5 bg-surface-container border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher par livre" type="text"/>
+    </div>
     <div class="space-y-4 overflow-y-auto max-h-125 rounded-3xl">
-      @for (reservation of reservations(); track reservation.id) {
+      @for (reservation of reservationsFiltered(); track reservation.id) {
         <div
           class="p-6 bg-surface-container-low rounded-2xl flex items-center gap-6 group hover:bg-surface-container-high transition-colors">
           <div class="w-14 h-20 rounded-lg bg-surface-container-lowest shrink-0 shadow-sm overflow-hidden">
@@ -97,11 +100,15 @@
     </div>
   </section>
   <!-- Loans Tracking -->
-  <section class="space-y-6 bg-surface-container-highest rounded-3xl p-3">
+  <section class="space-y-6 bg-surface-container rounded-3xl p-3">
+    <div class="flex justify-between">
       <h2 class="text-2xl font-bold tracking-tight text-on-surface">Emprunts en cours</h2>
+      <input [formField]="searchBorrowsForm" class="w-1/2 h-3.5 pl-16 pr-6 py-5 bg-surface-container-lowest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher par livre" type="text"/>
+    </div>
+
     <div class="bg-surface-container-lowest max-h-125 rounded-3xl p-6 space-y-4 overflow-y-auto">
-      @for (borrow of currentBorrows(); track borrow.borrowId) {
-        <div class="flex items-center bg-gray-100 justify-between gap-7 p-4 rounded-xl">
+      @for (borrow of currentBorrowsFiltered(); track borrow.borrowId) {
+        <div class="flex items-center bg-gray-100 justify-between gap-7 p-4 rounded-xl min-h-20">
           <div class="flex items-center gap-3 flex-1">
             <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary">person</span>
@@ -159,8 +166,11 @@
   <div class="bg-surface-container-lowest rounded-3xl overflow-hidden">
     <table class="w-full text-left border-collapse">
       <thead>
-      <tr class="bg-surface-container-low text-on-surface-variant text-[11px] font-black uppercase tracking-widest">
-        <th class="px-8 py-5">Livre</th>
+      <tr class="bg-surface-container text-on-surface-variant text-[11px] font-black uppercase tracking-widest">
+        <div class="flex justify-between items-center p-5">
+          <input [formField]="searchBookForm" class="w-1/2 h-3.5 p-5 bg-gray-50 border font-medium border-gray-500 rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher par livre" type="text"/>
+          <th class="px-8 py-5">Livre</th>
+        </div>
         <th class="px-8 py-5">Etat</th>
         <th class="px-8 py-5 text">Disponibilité</th>
         <th class="px-8 py-5 text-center">Réservé</th>
@@ -168,7 +178,7 @@
       </tr>
       </thead>
       <tbody class="divide-y divide-outline-variant/10">
-        @for (book of books(); track book.id) {
+        @for (book of booksFiltered(); track book.id) {
           <tr class="hover:bg-surface-container-low/50 transition-colors">
             <td class="px-8 py-6">
               <div class="flex items-center gap-4">
