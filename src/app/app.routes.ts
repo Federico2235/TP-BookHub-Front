@@ -43,4 +43,9 @@ export const routes: Routes = [
     component: AdminBoard,
     canActivate: [authGuardGuard,adminGuard],
   },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: Home
+  }
 ];
