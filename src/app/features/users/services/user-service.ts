@@ -4,7 +4,6 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { SignupRequest } from '../models/signupRequest.model';
 import { SignupResponse } from '../models/signupResponse.model';
-import { Borrow } from '../../../shared/model/Borrow.model.ts';
 import { Role } from '../../books/models/role.model';
 
 @Injectable({
@@ -40,5 +39,13 @@ export class UserService {
 
   updateUserRole(userId: number, newRole: Role): Observable<User> {
     return this.http.patch<User>(`${this.API_URL}/${userId}/role`, { role: newRole });
+  }
+
+  updateLoggedUser() {
+    if (localStorage.getItem('id')) {
+      this.fetchUserById(localStorage.getItem('id')!).subscribe({
+        next: (user) => this.loggedUserSignal.set(user),
+      });
+    }
   }
 }
