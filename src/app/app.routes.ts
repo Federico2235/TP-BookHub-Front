@@ -25,9 +25,9 @@ export const routes: Routes = [
     component: Login,
   },
   {
-    path: 'profile/:id',
+    path: 'profile',
     component: UserProfile,
-    canActivate: [authGuardGuard, profileOwnerGuard],
+    canActivate: [authGuardGuard],
   },
   {
     path: 'signup',

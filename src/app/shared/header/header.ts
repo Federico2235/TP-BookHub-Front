@@ -32,9 +32,6 @@ export class Header {
   }
 
   navigateToProfile() {
-     const userId= this.authService.getUserId();
-    if (userId) {
-      this.router.navigate(['profile', userId]);
-    }
+      this.router.navigate(['profile']);
   }
 }
