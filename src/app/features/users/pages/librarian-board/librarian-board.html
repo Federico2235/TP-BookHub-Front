@@ -184,9 +184,9 @@
     <table class="w-full text-left border-collapse">
       <thead>
       <tr class="bg-surface-container text-on-surface-variant text-[11px] font-black uppercase tracking-widest">
-        <div class="flex justify-between items-center p-5">
-          <input [formField]="searchBookForm" class="w-1/2 h-3.5 p-5 bg-gray-50 border font-medium border-gray-500 rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher par livre" type="text"/>
+        <div class="flex gap-5 items-center p-5">
           <th class="px-8 py-5">Livre</th>
+          <input [formField]="searchBookForm" class="w-1/2 h-3.5 p-5 bg-gray-50 border font-medium border-gray-500 rounded-full text-lg focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/60" placeholder="Rechercher par livre" type="text"/>
         </div>
         <th class="px-8 py-5">Etat</th>
         <th class="px-8 py-5 text">Disponibilité</th>
@@ -200,9 +200,11 @@
             <td class="px-8 py-6">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-16 rounded-md bg-slate-200 overflow-hidden shrink-0 shadow-sm">
-                  <img class="w-full h-full object-cover"
-                       data-alt="minimalist book cover design for 'The Silent Patient' with a cracked marble texture and bold typography"
-                       src="{{book.imgUrl}}" alt="{{book.title}} cover" />
+                  <a routerLink="/detail/{{book.id}}">
+                    <img class="w-full h-full object-cover"
+                         data-alt="minimalist book cover design for 'The Silent Patient' with a cracked marble texture and bold typography"
+                         src="{{book.imgUrl}}" alt="{{book.title}} cover" />
+                  </a>
                 </div>
                 <div>
                   <p class="font-bold text-on-surface">{{ book.title }}</p>
