@@ -10,10 +10,11 @@ import { AvailabilityStatus } from '../../../books/models/availabilityStatus.mod
 import { Reservation } from '../../../../shared/model/Reservation.model';
 import { BorrowCreate } from '../../../../shared/model/BorrowCreate.model';
 import { form, FormField } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-librarian-board',
-  imports: [DatePipe, FormField],
+  imports: [DatePipe, FormField, RouterLink],
   templateUrl: './librarian-board.html',
   styleUrl: './librarian-board.css',
 })
